@@ -1,3 +1,6 @@
+#hand gesture, pose detection using yolo 
+#author @ taylor tam
+
 import mediapipe as mp
 import cv2
 import numpy as np
@@ -100,7 +103,6 @@ def read_frame(frame, hands):
 
     for r in yolo_results:
         #annotate boxes
-        annotator = Annotator(canvas)
         boxes = r.boxes
         for box in boxes:
             b = box.xyxy[0]
@@ -145,7 +147,7 @@ def read_frame(frame, hands):
                 img_counter += 1        
     return canvas, start
 
-
+#video capture, display, and process gestures
 def cap_video():
     cap = cv2.VideoCapture(1) 
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
