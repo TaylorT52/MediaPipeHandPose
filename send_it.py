@@ -5,7 +5,7 @@ from collections import deque
 import multiprocessing
 
 from blessed import Terminal
-from .nxbt import Nxbt, PRO_CONTROLLER
+from nxbt import Nxbt, PRO_CONTROLLER
 
 
 class LoadingSpinner():
