@@ -9,20 +9,15 @@ from nxbt import Nxbt, PRO_CONTROLLER
 
 
 class LoadingSpinner():
-
     SPINNER_CHARS = ['■ □ □ □', '□ ■ □ □', '□ □ ■ □', '□ □ □ ■', '□ □ □ ■', '□ □ ■ □', '□ ■ □ □', '■ □ □ □']  # noqa
-
     def __init__(self):
-
         self.creation_time = time.perf_counter()
         self.last_update_time = self.creation_time
         self.current_char_index = 0
 
     def get_spinner_char(self):
-
         current_time = time.perf_counter()
         delta = current_time - self.last_update_time
-
         if delta > 0.07:
             self.last_update_time = current_time
 
@@ -30,12 +25,10 @@ class LoadingSpinner():
                 self.current_char_index = 0
             else:
                 self.current_char_index += 1
-
         return self.SPINNER_CHARS[self.current_char_index]
 
 
 class ControllerTUI():
-
     CONTROLS = {
         "ZL": "◿□□□□",
         "L": "◿□□□□",
@@ -85,7 +78,6 @@ class ControllerTUI():
         deactivation
         :type toggle: bool
         """
-
         self.auto_keypress_deactivation = toggle
 
     def set_remote_connection_status(self, status):
@@ -95,11 +87,9 @@ class ControllerTUI():
         :param status: The status of the remote connection
         :type status: bool
         """
-
         self.remote_connection = status
 
     def activate_control(self, key, activated_text=None):
-
         if activated_text:
             self.CONTROLS[key] = activated_text
         else:
@@ -110,11 +100,9 @@ class ControllerTUI():
             self.CONTROL_RELEASE_TIMERS[key] = time.perf_counter()
 
     def deactivate_control(self, key):
-
         self.CONTROLS[key] = self.DEFAULT_CONTROLS[key]
 
     def render_controller(self):
-
         if self.auto_keypress_deactivation:
             # Release any overdue timers
             for control in self.CONTROL_RELEASE_TIMERS.keys():
@@ -122,7 +110,6 @@ class ControllerTUI():
                 current_time = time.perf_counter()
                 if pressed_time is not False and current_time - pressed_time > 0.25:
                     self.deactivate_control(control)
-
         ZL = self.CONTROLS['ZL']
         L = self.CONTROLS['L']
         ZR = self.CONTROLS['ZR']
@@ -170,7 +157,6 @@ class ControllerTUI():
 
 
 class InputTUI():
-
     KEYMAP = {
         # Left Stick Mapping
         "w": {
@@ -264,7 +250,6 @@ class InputTUI():
     }
 
     def __init__(self, reconnect_target=None, debug=False, logfile=False, force_remote=False):
-
         self.reconnect_target = reconnect_target
         self.term = Terminal()
         if force_remote:
@@ -284,7 +269,6 @@ class InputTUI():
                 print("The original pynput import is displayed below:\n")
                 print(e)
                 exit(1)
-
         self.debug = debug
         self.logfile = logfile
 
@@ -304,7 +288,6 @@ class InputTUI():
         the current script is running as SSH
         :rtype: bool
         """
-
         remote_connection = False
         remote_process_names = ['sshd', 'mosh-server']
         ppid = os.getppid()
@@ -318,11 +301,9 @@ class InputTUI():
         return remote_connection
 
     def start(self):
-
         self.mainloop(self.term)
 
     def mainloop(self, term):
-
         # Initializing a controller
         if not self.debug:
             self.nx = Nxbt(disable_logging=True)
@@ -392,9 +373,7 @@ class InputTUI():
                 print(errors)
 
     def remote_input_loop(self, term):
-
         self.controller.set_remote_connection_status(True)
-
         inp = term.inkey(timeout=0)
         while inp != chr(113):  # Checking for q press
             # Cutoff large buffered input from the deque
@@ -406,7 +385,6 @@ class InputTUI():
                 term._keyboard_buf = deque([term._keyboard_buf.pop()])
 
             inp = term.inkey(1/66)
-
             pressed_key = None
             if inp.is_sequence:
                 pressed_key = inp.name
@@ -441,7 +419,6 @@ class InputTUI():
 
     def direct_input_loop(self, term):
         from pynput import keyboard
-
         self.controller.toggle_auto_keypress_deactivation(False)
         self.exit_tui = False
         self.capture_input = True
@@ -482,7 +459,6 @@ class InputTUI():
                     pass
 
         def on_release(key):
-
             # Parse the key release event
             released_key = None
             try:
@@ -517,7 +493,6 @@ class InputTUI():
                     pass
 
         def input_worker(nxbt, controller_index, input_packet):
-
             while True:
                 packet = input_packet["packet"]
 
@@ -581,7 +556,6 @@ class InputTUI():
             time.sleep(1/120)
 
     def render_start_screen(self, term, loading_text):
-
         print(term.home + term.move_y((term.height // 2) - 8))
         print(term.center("___╲╱___"))
         print(term.center("│╲  ╱╲  ╱│"))
@@ -596,7 +570,6 @@ class InputTUI():
         print(term.black_on_white(term.center("")))
 
     def render_top_bar(self, term):
-
         print(term.move_y(1))
         if self.remote_connection:
             print(term.bold_black_on_white(term.center(term.bold_black_on_red("  REMOTE MODE  "))))
@@ -608,12 +581,10 @@ class InputTUI():
         print(term.white_on_black(" NXBT TUI 🎮 "))
 
     def render_bottom_bar(self, term):
-
         print(term.move_y(term.height))
         print(term.center(term.bold_black_on_white(" <Press q to quit> ")))
 
     def check_for_disconnect(self, term):
-
         state = self.nx.state[self.controller_index]["state"]
         if state != 'connected':
             print(term.home + term.move_y((term.height // 2) - 4))

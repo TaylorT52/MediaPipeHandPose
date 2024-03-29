@@ -1,6 +1,7 @@
 #hand gesture, pose detection using yolo 
 #author @ taylor tam
 
+##### IMPORTS #####
 import mediapipe as mp
 import cv2
 import numpy as np
@@ -10,6 +11,13 @@ import os
 from ultralytics.utils.plotting import Annotator 
 import json
 from google.protobuf.json_format import MessageToDict
+import os
+import time
+import psutil
+from collections import deque
+import multiprocessing
+# from blessed import Terminal
+# from nxbt import Nxbt, PRO_CONTROLLER
 
 #load some stuff!
 weights_loc = "weights/best.pt"
@@ -30,6 +38,8 @@ gestures = ["speed_inc", "speed_dec", "to_right", "to_left"]
 with open("base_gestures.json", "r") as infile:
     data = json.load(infile)
 
+
+##### GESTURE MATCHING #####
 #preprocessing for gesture matching
 def preprocess_image(img):
     hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -72,6 +82,7 @@ def match_gestures(handedness, img2, threshold=110):
             print("One or both sets of descriptors are missing or empty.")
     return ""
 
+##### PROCESS FRAMES! #####
 #process each frame
 def read_frame(frame, hands): 
     handedness = ""
@@ -114,7 +125,6 @@ def read_frame(frame, hands):
             #create cropped canvas for saving
             save_me = canvas[max(int(mirrored_box[1]), 0):min(int(mirrored_box[3]), canvas.shape[0]),
                             max(int(mirrored_box[0]), 0):min(int(mirrored_box[2]), canvas.shape[1])]
-
             h, w = save_me.shape[:2]
             current_aspect_ratio = w / h
     
@@ -137,7 +147,6 @@ def read_frame(frame, hands):
             
             if len(start) != 0:
                 cv2.putText(canvas, start, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-
             cv2.putText(canvas, "Hand: " + handedness, (50, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
             if cv2.waitKey(10) & 0xFF == ord('s'):
@@ -147,6 +156,7 @@ def read_frame(frame, hands):
                 img_counter += 1        
     return canvas, start
 
+##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
     cap = cv2.VideoCapture(1) 
@@ -166,5 +176,16 @@ def cap_video():
     cap.release()
     cv2.destroyAllWindows()
 
+def mimic_capture():
+    frame_rate = 60
+    delay = 1.0 / frame_rate
+    start_time = time.time()
+    while True:
+        elapsed_time = time.time() - start_time
+        time_to_wait = delay - elapsed_time
+        print(elapsed_time)
+        if time_to_wait > 0:
+            time.sleep(time_to_wait)
+
 #run it!
-cap_video()
+mimic_capture()
