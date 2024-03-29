@@ -9,7 +9,7 @@ import json
 from google.protobuf.json_format import MessageToDict
 
 
-weights_loc = "/Users/taylor/runs/detect/train14/weights/best.pt"
+weights_loc = "weights/best.pt"
 yolo_model = YOLO(weights_loc)
 
 mp_drawing = mp.solutions.drawing_utils
