@@ -17,6 +17,7 @@ yolo_model = YOLO(weights_loc)
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
+#starting variables
 padding = 30
 img_counter = 0
 mp_hands = mp.solutions.hands
@@ -95,7 +96,6 @@ def read_frame(frame, hands):
                 mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2, circle_radius=2)
             )
         handedness = results.multi_handedness[0].classification[0].label
-
     width = canvas_for_yolo.shape[1]
 
     #perform YOLO predictions
@@ -166,5 +166,5 @@ def cap_video():
     cap.release()
     cv2.destroyAllWindows()
 
-
+#run it!
 cap_video()
