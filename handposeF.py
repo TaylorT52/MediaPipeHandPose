@@ -15,22 +15,7 @@ import os
 import time
 from blessed import Terminal
 import nxbt
-from nxbt import Sticks
 import send_it2
-
-##### START SEQUENCE #####
-#starts from change grip/order --> Mario Kart
-MACRO = """
-LOOP 12
-    B 0.1s
-    0.1s
-1s
-DPAD_UP 0.25s
-L_STICK@-100+000 0.2s
-A 0.1s
-0.2s
-DPAD_UP 0.25s
-"""
 
 ##### LOADING STUFF #####
 #load some stuff!
@@ -170,25 +155,6 @@ def read_frame(frame, hands):
                 img_counter += 1        
     return canvas, start
 
-##### CONNECT & START #####
-#connects and runs a start sequence
-def connect_controller():
-    print("Connecting...")
-    nx = nxbt.Nxbt()
-    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
-    nx.wait_for_connection(controller_index)
-    print("Initialized")
-    #must be blocking 
-    macro_id = nx.macro(controller_index, MACRO, block=True)
-    time.sleep(3)
-    print("Stopping Macro")
-    nx.stop_macro(controller_index, macro_id)
-    print("Stopped Macro")
-    print("Ready to play!")
-    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
-
-    return nx, controller_index
-
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
@@ -214,7 +180,7 @@ def cap_video():
 #no camera no problem
 def mimic_capture():
     #set up controller
-    nx, controller_index = connect_controller()
+    nx, controller_index = send_it2.connect_controller()
 
     #set up time constants
     frame_rate = 60
