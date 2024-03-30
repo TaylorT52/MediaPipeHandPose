@@ -15,6 +15,7 @@ import os
 import time
 from blessed import Terminal
 import nxbt
+from nxbt import Sticks
 import send_it
 
 #load some stuff!
@@ -163,7 +164,7 @@ def connect_controller():
     print("Initialized")
     nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
     nx.tilt_stick(controller_index, Sticks.RIGHT_STICK, 100, 0,
-                  tilted=0.75, released=0.25)
+                  tilted=0.75, released=1)
     print("Ready to play!")
 
     return nx, controller_index
