@@ -25,7 +25,7 @@ LOOP 12
     0.1s
 1.5s
 DPAD_UP 0.25s
-L_STICK@-100+000 0.5s
+L_STICK@-100+000 0.2s
 """
 
 #load some stuff!
@@ -178,6 +178,7 @@ def connect_controller():
     nx.stop_macro(controller_index, macro_id)
     print("Stopped Macro")
     print("Ready to play!")
+    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
 
     return nx, controller_index
 
@@ -212,17 +213,10 @@ def mimic_capture():
     delay = 1.0 / frame_rate
     start_time = time.time()
 
-    #for testing purposes
-    counter = 0
 
     while True:
         elapsed_time = time.time() - start_time
         time_to_wait = delay - elapsed_time
-
-        if counter == 0:
-            nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
-            counter += 1
-            print('pressed button!')
         
         if time_to_wait > 0:
             time.sleep(time_to_wait)
