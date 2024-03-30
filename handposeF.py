@@ -25,17 +25,6 @@ LOOP 12
     0.1s
 1.5s
 DPAD_UP 1s
-DPAD_RIGHT 0.075s
-0.075s
-A 0.1s
-1.5s
-DPAD_DOWN 1.00s
-A 0.1s
-0.25s
-DPAD_DOWN 0.95s
-A 0.1s
-0.25s
-L_STICK_PRESS 0.1s
 """
 
 #load some stuff!
