@@ -195,8 +195,9 @@ def mimic_capture():
         time_to_wait = delay - elapsed_time
 
         if counter == 0:
-            nx.press_buttons(controller_index, [nxbt.Buttons.B], down=1.0)
+            nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
             counter += 1
+            print('pressed button!')
         
         if time_to_wait > 0:
             time.sleep(time_to_wait)
