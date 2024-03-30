@@ -18,6 +18,20 @@ import nxbt
 from nxbt import Sticks
 import send_it
 
+#macro
+MACRO = """
+LOOP 12
+    A 0.5s
+    0.1s
+1.5s
+DPAD_DOWN 1.00s
+DPAD_DOWN 1.00s
+DPAD_DOWN 1.00s
+A 0.1s
+0.25s
+L_STICK_PRESS 0.1s
+"""
+
 #load some stuff!
 weights_loc = "weights/best.pt"
 yolo_model = YOLO(weights_loc)
@@ -162,8 +176,11 @@ def connect_controller():
     controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
     nx.wait_for_connection(controller_index)
     print("Initialized")
-    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
-    nx.DPAD_DOWN()
+    macro_id = nx.macro(controller_index, MACRO, block=False)
+    time.sleep(3)
+    print("Stopping Macro")
+    nx.stop_macro(controller_index, macro_id)
+    print("Stopped Macro")
     print("Ready to play!")
 
     return nx, controller_index
