@@ -15,6 +15,7 @@ import os
 import time
 from blessed import Terminal
 import nxbt
+import send_it
 
 #load some stuff!
 weights_loc = "weights/best.pt"
@@ -153,6 +154,18 @@ def read_frame(frame, hands):
                 img_counter += 1        
     return canvas, start
 
+##### CONNECT & START #####
+def connect_controller():
+    spinner = send_it.LoadingSpinner()
+    nx = nxbt.Nxbt()
+    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+    nx.wait_for_connection(controller_index)
+    print("initialized")
+    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
+    print("ready to play!")
+
+    return nx, controller_index
+
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
@@ -177,10 +190,7 @@ def cap_video():
 ########## TESTING! ##########
 def mimic_capture():
     #set up controller
-    nx = nxbt.Nxbt()
-    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
-    nx.wait_for_connection(controller_index)
-    print("Connected")
+    nx, controller_index = connect_controller()
 
     #set up time constants
     frame_rate = 60
