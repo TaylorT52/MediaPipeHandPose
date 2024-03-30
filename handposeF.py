@@ -231,6 +231,8 @@ def mimic_capture():
             send_it2.turn_right(nx, controller_index)
             time.sleep(0.5)
             send_it2.turn_left(nx, controller_index)
+            time.sleep(0.5)
+            send_it2.speed_up(nx, controller_index)
             count = 1
 
         if time_to_wait > 0:
