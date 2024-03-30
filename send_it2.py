@@ -22,11 +22,10 @@ DPAD_UP 0.25s
 A 0.1s
 """
 
-first_connect = False
-
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
+    first_connect = False
     print("Connecting...")
     nx = nxbt.Nxbt()
     try:
@@ -49,7 +48,7 @@ def connect_controller():
         print("Stopping Macro")
         nx.stop_macro(controller_index, macro_id)
         print("Stopped Macro")
-        
+
     print("Ready to play!")
 
     return nx, controller_index
