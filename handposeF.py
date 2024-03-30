@@ -205,7 +205,7 @@ def connect_controller():
     controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
     nx.wait_for_connection(controller_index)
     print("Initialized")
-    macro_id = nx.macro(controller_index, MACRO, block=False)
+    macro_id = nx.macro(controller_index, MACRO, block=True)
     time.sleep(3)
     print("Stopping Macro")
     nx.stop_macro(controller_index, macro_id)
