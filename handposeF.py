@@ -120,7 +120,7 @@ def read_frame(frame, hands):
             mirrored_x_min = width - b[2]
             mirrored_x_max = width - b[0]
             mirrored_box = [mirrored_x_min-padding, b[1]-padding, mirrored_x_max+padding, b[3]+padding]
-            c = box.cls
+            # c = box.cls
 
             #create cropped canvas for saving
             save_me = canvas[max(int(mirrored_box[1]), 0):min(int(mirrored_box[3]), canvas.shape[0]),
@@ -142,7 +142,7 @@ def read_frame(frame, hands):
     
             # Resize image to standard size
             resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
-            base_img  = cv2.imread("base_gestures/start_base.png")
+            # base_img  = cv2.imread("base_gestures/start_base.png")
             start = match_gestures(handedness, resized_image)
             
             if len(start) != 0:
@@ -153,7 +153,8 @@ def read_frame(frame, hands):
                 img_name = f"cropped_hand_{img_counter}.png"
                 cv2.imwrite("saved_imgs/" + img_name, resized_image)
                 print(f"{img_name} saved.")
-                img_counter += 1        
+                img_counter += 1   
+
     return canvas, start
 
 ##### VIDEO CAPTURE! #####
@@ -195,6 +196,7 @@ def mimic_capture():
         elapsed_time = time.time() - start_time
         time_to_wait = delay - elapsed_time
         
+        #run some test commands!
         if counter == 0: 
             send_it2.turn_right(nx, controller_index)
             time.sleep(0.2)
