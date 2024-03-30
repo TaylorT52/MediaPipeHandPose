@@ -23,9 +23,11 @@ MACRO = """
 LOOP 12
     B 0.1s
     0.1s
-1.5s
+1s
 DPAD_UP 0.25s
 L_STICK@-100+000 0.2s
+A 0.1s
+0.2s
 DPAD_UP 0.25s
 """
 
