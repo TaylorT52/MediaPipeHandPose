@@ -157,6 +157,7 @@ def read_frame(frame, hands):
 ##### CONNECT & START #####
 def connect_controller():
     spinner = send_it.LoadingSpinner()
+    print(spinner.get_spinner_char())
     nx = nxbt.Nxbt()
     controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
     nx.wait_for_connection(controller_index)
