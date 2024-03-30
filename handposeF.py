@@ -31,25 +31,6 @@ A 0.1s
 DPAD_UP 0.25s
 """
 
-##### CONNECT & START #####
-#connects and runs a start sequence
-def connect_controller():
-    print("Connecting...")
-    nx = nxbt.Nxbt()
-    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
-    nx.wait_for_connection(controller_index)
-    print("Initialized")
-    #must be blocking 
-    macro_id = nx.macro(controller_index, MACRO, block=True)
-    time.sleep(3)
-    print("Stopping Macro")
-    nx.stop_macro(controller_index, macro_id)
-    print("Stopped Macro")
-    print("Ready to play!")
-    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
-
-    return nx, controller_index
-
 ##### LOADING STUFF #####
 #load some stuff!
 weights_loc = "weights/best.pt"
@@ -208,10 +189,29 @@ def cap_video():
     cap.release()
     cv2.destroyAllWindows()
 
+##### CONNECT & START #####
+#connects and runs a start sequence
+def connect_controller():
+    print("Connecting...")
+    nx = nxbt.Nxbt()
+    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+    nx.wait_for_connection(controller_index)
+    print("Initialized")
+    #must be blocking 
+    macro_id = nx.macro(controller_index, MACRO, block=True)
+    time.sleep(3)
+    print("Stopping Macro")
+    nx.stop_macro(controller_index, macro_id)
+    print("Stopped Macro")
+    print("Ready to play!")
+    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
+
+    return nx, controller_index
 
 ########## TESTING! ##########
 #no camera no problem
 def mimic_capture():
+    print('setting up')
     #set up controller
     nx, controller_index = connect_controller()
 
