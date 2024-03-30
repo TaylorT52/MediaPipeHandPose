@@ -29,6 +29,8 @@ L_STICK@-100+000 0.2s
 A 0.1s
 0.2s
 DPAD_UP 0.25s
+0.1s
+A 0.1s
 """
 
 ##### LOADING STUFF #####
@@ -184,7 +186,6 @@ def connect_controller():
     nx.stop_macro(controller_index, macro_id)
     print("Stopped Macro")
     print("Ready to play!")
-    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
 
     return nx, controller_index
 
@@ -219,7 +220,6 @@ def mimic_capture():
     frame_rate = 60
     delay = 1.0 / frame_rate
     start_time = time.time()
-
 
     while True:
         elapsed_time = time.time() - start_time
