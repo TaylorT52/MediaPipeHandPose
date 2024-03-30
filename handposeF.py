@@ -33,6 +33,7 @@ A 0.1s
 0.25s
 DPAD_DOWN 0.95s
 A 0.1s
+DPAD_UP 0.95s
 0.25s
 L_STICK_PRESS 0.1s
 """
