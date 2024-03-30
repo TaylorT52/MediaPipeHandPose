@@ -15,7 +15,7 @@ import os
 import time
 from blessed import Terminal
 import nxbt
-import send_it
+import send_it2
 
 ##### START SEQUENCE #####
 #starts from change grip/order --> Mario Kart
@@ -221,10 +221,19 @@ def mimic_capture():
     delay = 1.0 / frame_rate
     start_time = time.time()
 
+    #for testing
+    counter = 0
+
     while True:
         elapsed_time = time.time() - start_time
         time_to_wait = delay - elapsed_time
         
+        if counter == 0: 
+            send_it2.turn_left(nx, controller_index)
+            time.sleep(0.2)
+            send_it2.turn_right(nx, controller_index)
+            time.sleep(0.2)
+
         if time_to_wait > 0:
             time.sleep(time_to_wait)
             
