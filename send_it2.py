@@ -22,23 +22,34 @@ DPAD_UP 0.25s
 A 0.1s
 """
 
+first_connect = False
+
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
     print("Connecting...")
     nx = nxbt.Nxbt()
-    controller_index = nx.create_controller(
-    nxbt.PRO_CONTROLLER,
-    reconnect_address=nx.get_switch_addresses())
-    #controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+    try:
+        #find old controller
+        controller_index = nx.create_controller(
+        nxbt.PRO_CONTROLLER,
+        reconnect_address=nx.get_switch_addresses())
+    except:
+        #if first time connecting to controller
+        controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+        first_connect = True
+
     nx.wait_for_connection(controller_index)
     print("Initialized")
-    #must be blocking 
-    macro_id = nx.macro(controller_index, MACRO, block=True)
-    time.sleep(3)
-    print("Stopping Macro")
-    nx.stop_macro(controller_index, macro_id)
-    print("Stopped Macro")
+
+    if first_connect:
+        #must be blocking 
+        macro_id = nx.macro(controller_index, MACRO, block=True)
+        time.sleep(3)
+        print("Stopping Macro")
+        nx.stop_macro(controller_index, macro_id)
+        print("Stopped Macro")
+        
     print("Ready to play!")
 
     return nx, controller_index
