@@ -213,7 +213,7 @@ def cap_video():
 #no camera no problem
 def mimic_capture():
     #set up controller
-    nx, controller_index = send_it2.connect_controller()
+    nx, controller_index = connect_controller()
 
     #set up time constants
     frame_rate = 60
