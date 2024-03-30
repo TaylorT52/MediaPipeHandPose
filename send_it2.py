@@ -27,7 +27,10 @@ A 0.1s
 def connect_controller():
     print("Connecting...")
     nx = nxbt.Nxbt()
-    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+    controller_index = nx.create_controller(
+    nxbt.PRO_CONTROLLER,
+    reconnect_address=nx.get_switch_addresses())
+    #controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
     nx.wait_for_connection(controller_index)
     print("Initialized")
     #must be blocking 
