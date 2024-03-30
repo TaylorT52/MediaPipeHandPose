@@ -24,7 +24,8 @@ LOOP 12
     B 0.1s
     0.1s
 1.5s
-DPAD_UP 1s
+DPAD_UP 0.25s
+L_STICK@-100+000 0.5s
 """
 
 #load some stuff!
