@@ -18,7 +18,8 @@ import nxbt
 from nxbt import Sticks
 import send_it
 
-#macro
+##### START SEQUENCE #####
+#starts from change grip/order --> Mario Kart
 MACRO = """
 LOOP 12
     B 0.1s
@@ -31,6 +32,7 @@ A 0.1s
 DPAD_UP 0.25s
 """
 
+##### LOADING STUFF #####
 #load some stuff!
 weights_loc = "weights/best.pt"
 yolo_model = YOLO(weights_loc)
@@ -169,12 +171,14 @@ def read_frame(frame, hands):
     return canvas, start
 
 ##### CONNECT & START #####
+#connects and runs a start sequence
 def connect_controller():
     print("Connecting...")
     nx = nxbt.Nxbt()
     controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
     nx.wait_for_connection(controller_index)
     print("Initialized")
+    #must be blocking 
     macro_id = nx.macro(controller_index, MACRO, block=True)
     time.sleep(3)
     print("Stopping Macro")
@@ -207,6 +211,7 @@ def cap_video():
 
 
 ########## TESTING! ##########
+#no camera no problem
 def mimic_capture():
     #set up controller
     nx, controller_index = connect_controller()
@@ -224,7 +229,6 @@ def mimic_capture():
         if time_to_wait > 0:
             time.sleep(time_to_wait)
             
-            
-
+        
 #run it!
 mimic_capture()
