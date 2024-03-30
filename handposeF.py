@@ -35,30 +35,6 @@ DPAD_DOWN 0.95s
 A 0.1s
 0.25s
 L_STICK_PRESS 0.1s
-1.0s
-L_STICK@-100+000 0.5s
-L_STICK@+000+100 0.5s
-L_STICK@+100+000 0.5s
-L_STICK@+000-100 0.5s
-B 0.1s
-0.25s
-R_STICK_PRESS 0.1s
-1.0s
-R_STICK@-100+000 0.5s
-R_STICK@+000+100 0.5s
-R_STICK@+100+000 0.5s
-R_STICK@+000-100 0.5s
-LOOP 4
-    B 0.1s
-    0.1s
-B 0.1s
-0.4s
-DPAD_LEFT 0.1s
-0.1s
-A 0.1s
-1.5s
-A 0.1s
-5.0s
 """
 
 #load some stuff!
