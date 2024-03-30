@@ -162,6 +162,8 @@ def connect_controller():
     nx.wait_for_connection(controller_index)
     print("Initialized")
     nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
+    nx.tilt_stick(controller_index, Sticks.RIGHT_STICK, 100, 0,
+                  tilted=0.25, released=0.25)
     print("Ready to play!")
 
     return nx, controller_index
