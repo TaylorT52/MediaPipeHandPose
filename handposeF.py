@@ -13,11 +13,8 @@ import json
 from google.protobuf.json_format import MessageToDict
 import os
 import time
-import psutil
-from collections import deque
-import multiprocessing
-# from blessed import Terminal
-# from nxbt import Nxbt, PRO_CONTROLLER
+from blessed import Terminal
+import nxbt
 
 #load some stuff!
 weights_loc = "weights/best.pt"
@@ -176,16 +173,35 @@ def cap_video():
     cap.release()
     cv2.destroyAllWindows()
 
+
+########## TESTING! ##########
 def mimic_capture():
+    #set up controller
+    nx = nxbt.Nxbt()
+    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+    nx.wait_for_connection(controller_index)
+    print("Connected")
+
+    #set up time constants
     frame_rate = 60
     delay = 1.0 / frame_rate
     start_time = time.time()
+
+    #for testing purposes
+    counter = 0
+
     while True:
         elapsed_time = time.time() - start_time
         time_to_wait = delay - elapsed_time
-        print(elapsed_time)
+
+        if counter == 0:
+            nx.press_buttons(controller_index, [nxbt.Buttons.B], down=1.0)
+            counter += 1
+        
         if time_to_wait > 0:
             time.sleep(time_to_wait)
+            
+            
 
 #run it!
 mimic_capture()
