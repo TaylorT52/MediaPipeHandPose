@@ -15,7 +15,7 @@ import os
 import time
 from blessed import Terminal
 import nxbt
-import send_it2
+import send_it
 
 ##### START SEQUENCE #####
 #starts from change grip/order --> Mario Kart
@@ -169,6 +169,25 @@ def read_frame(frame, hands):
                 img_counter += 1        
     return canvas, start
 
+##### CONNECT & START #####
+#connects and runs a start sequence
+def connect_controller():
+    print("Connecting...")
+    nx = nxbt.Nxbt()
+    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
+    nx.wait_for_connection(controller_index)
+    print("Initialized")
+    #must be blocking 
+    macro_id = nx.macro(controller_index, MACRO, block=True)
+    time.sleep(3)
+    print("Stopping Macro")
+    nx.stop_macro(controller_index, macro_id)
+    print("Stopped Macro")
+    print("Ready to play!")
+    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
+
+    return nx, controller_index
+
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
@@ -189,29 +208,10 @@ def cap_video():
     cap.release()
     cv2.destroyAllWindows()
 
-##### CONNECT & START #####
-#connects and runs a start sequence
-def connect_controller():
-    print("Connecting...")
-    nx = nxbt.Nxbt()
-    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER)
-    nx.wait_for_connection(controller_index)
-    print("Initialized")
-    #must be blocking 
-    macro_id = nx.macro(controller_index, MACRO, block=True)
-    time.sleep(3)
-    print("Stopping Macro")
-    nx.stop_macro(controller_index, macro_id)
-    print("Stopped Macro")
-    print("Ready to play!")
-    nx.press_buttons(controller_index, [nxbt.Buttons.A], down=1.0)
-
-    return nx, controller_index
 
 ########## TESTING! ##########
 #no camera no problem
 def mimic_capture():
-    print('setting up')
     #set up controller
     nx, controller_index = connect_controller()
 
@@ -220,20 +220,11 @@ def mimic_capture():
     delay = 1.0 / frame_rate
     start_time = time.time()
 
-    count = 0
 
     while True:
         elapsed_time = time.time() - start_time
         time_to_wait = delay - elapsed_time
         
-        if count == 0:
-            send_it2.turn_right(nx, controller_index)
-            time.sleep(0.5)
-            send_it2.turn_left(nx, controller_index)
-            time.sleep(0.5)
-            send_it2.speed_up(nx, controller_index)
-            count = 1
-
         if time_to_wait > 0:
             time.sleep(time_to_wait)
             
