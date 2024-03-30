@@ -229,10 +229,11 @@ def mimic_capture():
         time_to_wait = delay - elapsed_time
         
         if counter == 0: 
-            send_it2.turn_left(nx, controller_index)
-            time.sleep(0.2)
             send_it2.turn_right(nx, controller_index)
             time.sleep(0.2)
+            send_it2.turn_left(nx, controller_index)
+            time.sleep(0.2)
+            send_it2.speed_up(nx, controller_index)
             counter += 1
 
         if time_to_wait > 0:
