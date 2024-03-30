@@ -221,13 +221,17 @@ def mimic_capture():
     delay = 1.0 / frame_rate
     start_time = time.time()
 
+    count = 0
+
     while True:
         elapsed_time = time.time() - start_time
         time_to_wait = delay - elapsed_time
         
-        send_it2.turn_right(nx, controller_index)
-        time.sleep(0.5)
-        send_it2.turn_left(nx, controller_index)
+        if count == 0:
+            send_it2.turn_right(nx, controller_index)
+            time.sleep(0.5)
+            send_it2.turn_left(nx, controller_index)
+            count = 1
 
         if time_to_wait > 0:
             time.sleep(time_to_wait)

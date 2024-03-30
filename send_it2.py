@@ -4,7 +4,7 @@ from nxbt import Sticks
 
 def turn_right(nx, controller_idx):
     print("Turn right")
-    nx.tilt_stick(controller_idx, Sticks.RIGHT_STICK, -100, 0)
+    nx.tilt_stick(controller_idx, Sticks.RIGHT_STICK, 100, 0)
 
 def turn_left(nx, controller_idx):
     print("Turn left")
