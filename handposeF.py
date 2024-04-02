@@ -13,9 +13,7 @@ import json
 from google.protobuf.json_format import MessageToDict
 import os
 import time
-from blessed import Terminal
-import nxbt
-import send_it2
+#import send_it2
 
 
 ##### LOADING STUFF #####
@@ -157,10 +155,24 @@ def read_frame(frame, hands):
 
     return canvas, start
 
+#process the gestures & send to controller
+#TODO: take ns, controller_index
+def process_gesture(gesture):
+    if gesture == "speed_inc":
+        print("speed_inc")
+    elif gesture == "speed_dec":
+        print("speed_dec")
+    elif gesture == "to_right":
+        print("to_right")
+    elif gesture == "to_left":
+        print("to left")
+
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
     cap = cv2.VideoCapture(1) 
+    #TODO uncomment this :) && import sendit2
+    #nx, controller_index = send_it2.connect_controller()
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
             ret, frame = cap.read()
@@ -168,6 +180,8 @@ def cap_video():
                 break  
 
             canvas, gesture = read_frame(frame, hands)
+            #TODO: SEND ns, controller_index
+            process_gesture(gesture)
 
             #display
             cv2.imshow('Hand Skeleton', canvas)
@@ -210,4 +224,4 @@ def mimic_capture():
             
         
 #run it!
-mimic_capture()
+cap_video()
