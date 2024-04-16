@@ -50,8 +50,6 @@ def connect_controller():
         print("Stopped Macro")
 
     print("Ready to play!")
-    time.sleep(1)
-
     return nx, controller_index
 
 ##### CONTROLS #####
