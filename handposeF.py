@@ -237,4 +237,4 @@ def find_available_cameras(max_to_test=10):
     return available_indices
         
 #run it!
-mimic_capture()
+cap_video()
