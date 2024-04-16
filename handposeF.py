@@ -170,7 +170,7 @@ def process_gesture(gesture):
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
-    cap = cv2.VideoCapture(1) 
+    cap = cv2.VideoCapture(0) 
     print("this works!!")
     #TODO uncomment this :) && import sendit2
     nx, controller_index = send_it2.connect_controller()
