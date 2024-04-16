@@ -170,8 +170,7 @@ def process_gesture(gesture):
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
-    camera_indices = find_available_cameras()
-    cap = cv2.VideoCapture(camera_indices[0]) 
+    cap = cv2.VideoCapture(0) 
     print("this works!!")
     #TODO uncomment this :) && import sendit2
     nx, controller_index = send_it2.connect_controller()
@@ -223,18 +222,6 @@ def mimic_capture():
 
         if time_to_wait > 0:
             time.sleep(time_to_wait)
-            
-#find cameras
-def find_available_cameras(max_to_test=10):
-    available_indices = []
-    for i in range(max_to_test):
-        cap = cv2.VideoCapture(i, cv2.CAP_V4L2)  # Using V4L2 backend
-        if cap.isOpened():
-            available_indices.append(i)
-            cap.release()
-        else:
-            break  # Stop the loop if no camera is found at the current index
-    return available_indices
         
 #run it!
 cap_video()
