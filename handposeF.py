@@ -225,4 +225,4 @@ def mimic_capture():
             
         
 #run it!
-cap_video()
+mimic_capture()
