@@ -13,7 +13,7 @@ import json
 from google.protobuf.json_format import MessageToDict
 import os
 import time
-#import send_it2
+import send_it2
 
 
 ##### LOADING STUFF #####
@@ -172,7 +172,7 @@ def process_gesture(gesture):
 def cap_video():
     cap = cv2.VideoCapture(1) 
     #TODO uncomment this :) && import sendit2
-    #nx, controller_index = send_it2.connect_controller()
+    nx, controller_index = send_it2.connect_controller()
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
             ret, frame = cap.read()
