@@ -171,6 +171,7 @@ def process_gesture(gesture):
 #video capture, display, and process gestures
 def cap_video():
     cap = cv2.VideoCapture(1) 
+    print("this works!!")
     #TODO uncomment this :) && import sendit2
     nx, controller_index = send_it2.connect_controller()
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
