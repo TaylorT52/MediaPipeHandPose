@@ -180,6 +180,7 @@ def cap_video():
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
+                print("no ret")
                 break  
 
             canvas, gesture = read_frame(frame, hands)
