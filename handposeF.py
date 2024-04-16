@@ -183,6 +183,7 @@ def cap_video():
                 print("no ret")
                 break  
 
+            print("got to here!")
             canvas, gesture = read_frame(frame, hands)
             #TODO: SEND ns, controller_index
             process_gesture(gesture)
