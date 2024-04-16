@@ -83,6 +83,7 @@ def match_gestures(handedness, img2, threshold=110):
 ##### PROCESS FRAMES! #####
 #process each frame
 def read_frame(frame, hands): 
+    print('reading frame')
     handedness = ""
     start = ""
     
