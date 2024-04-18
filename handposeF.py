@@ -171,7 +171,7 @@ def process_gesture(gesture):
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
-    cap = cv2.VideoCapture('/dev/video1') 
+    cap = cv2.VideoCapture('/dev/video0') 
     print("This works!!")
     print(find_available_cameras())
     #TODO uncomment this :) && import sendit2
