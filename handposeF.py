@@ -158,34 +158,34 @@ def read_frame(frame, hands):
 
 #process the gestures & send to controller
 #TODO: take ns, controller_index
-def process_gesture(gesture):
+def process_gesture(gesture, nx, controller_idx):
     if gesture == "speed_inc":
         print("speed_inc")
+        send_it2.speed_up(nx, controller_idx)
     elif gesture == "speed_dec":
         print("speed_dec")
+        send_it2.slow_down(nx, controller_idx)
     elif gesture == "to_right":
+        send_it2.turn_right(nx, controller_idx)
         print("to_right")
     elif gesture == "to_left":
+        send_it2.turn_left(nx, controller_idx)
         print("to left")
 
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
     cap = cv2.VideoCapture('/dev/video0') 
-    print(cap)
-    print("This works!!")
     print(find_available_cameras())
     #TODO uncomment this :) && import sendit2
     nx, controller_index = send_it2.connect_controller()
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
             ret, frame = cap.read()
-            print("got to here")
             if not ret:
                 print("no ret")
                 break  
 
-            print("got to here!")
             canvas, gesture = read_frame(frame, hands)
             #TODO: SEND ns, controller_index
             process_gesture(gesture)
