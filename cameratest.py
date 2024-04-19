@@ -1,7 +1,7 @@
 import cv2
 
 # Change the source to '0' for the default camera, or use the video file path
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('/dev/video0')
 
 if not cap.isOpened():
     print("Error: Could not open video source.")
