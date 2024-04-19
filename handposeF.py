@@ -188,7 +188,7 @@ def cap_video():
 
             canvas, gesture = read_frame(frame, hands)
             #TODO: SEND ns, controller_index
-            process_gesture(gesture)
+            process_gesture(gesture, nx, controller_index)
 
             #display
             cv2.imshow('Hand Skeleton', canvas)
