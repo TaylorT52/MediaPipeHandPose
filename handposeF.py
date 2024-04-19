@@ -160,17 +160,13 @@ def read_frame(frame, hands):
 #TODO: take ns, controller_index
 def process_gesture(gesture, nx, controller_idx):
     if gesture == "speed_inc":
-        print("speed_inc")
         send_it2.speed_up(nx, controller_idx)
     elif gesture == "speed_dec":
-        print("speed_dec")
         send_it2.slow_down(nx, controller_idx)
     elif gesture == "to_right":
         send_it2.turn_right(nx, controller_idx)
-        print("to_right")
     elif gesture == "to_left":
         send_it2.turn_left(nx, controller_idx)
-        print("to left")
 
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
@@ -187,7 +183,6 @@ def cap_video():
                 break  
 
             canvas, gesture = read_frame(frame, hands)
-            #TODO: SEND ns, controller_index
             process_gesture(gesture, nx, controller_index)
 
             #display
@@ -228,19 +223,6 @@ def mimic_capture():
 
         if time_to_wait > 0:
             time.sleep(time_to_wait)
-
-def find_available_cameras(max_to_test=10):
-    available_indices = []
-    for i in range(max_to_test):
-        cap = cv2.VideoCapture(i, cv2.CAP_V4L2)  # Using V4L2 backend
-        if cap.isOpened():
-            ret, frame = cap.read()
-            if ret:
-                available_indices.append(i)
-            cap.release()
-        else:
-            cap.release()
-    return available_indices
 
 
 #run it!
