@@ -22,6 +22,10 @@ DPAD_UP 0.25s
 A 0.1s
 """
 
+MACRO2 = """
+ZL+ZR 0.25s
+"""
+
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
@@ -44,6 +48,12 @@ def connect_controller():
     if first_connect:
         #must be blocking 
         macro_id = nx.macro(controller_index, MACRO, block=True)
+        time.sleep(3)
+        print("Stopping Macro")
+        nx.stop_macro(controller_index, macro_id)
+        print("Stopped Macro")
+    else:
+        macro_id = nx.macro(controller_index, MACRO2, block=True)
         time.sleep(3)
         print("Stopping Macro")
         nx.stop_macro(controller_index, macro_id)
