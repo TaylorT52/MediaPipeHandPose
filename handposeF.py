@@ -176,6 +176,7 @@ def cap_video():
     print(find_available_cameras())
     #TODO uncomment this :) && import sendit2
     nx, controller_index = send_it2.connect_controller()
+    print("got to here")
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
             ret, frame = cap.read()
