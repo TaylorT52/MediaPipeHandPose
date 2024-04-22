@@ -1,6 +1,3 @@
-#hand gesture, pose detection using yolo 
-#author @ taylor tam
-
 ##### IMPORTS #####
 import mediapipe as mp
 import cv2
@@ -12,8 +9,6 @@ from ultralytics.utils.plotting import Annotator
 import json
 from google.protobuf.json_format import MessageToDict
 import os
-import time
-import send_it2
 
 
 ##### LOADING STUFF #####
@@ -30,57 +25,8 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 desired_aspect_ratio = 1 
 standard_size = (350, 350)
-gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper"]
+gestures = ["speed_inc", "speed_dec", "to_right", "to_left"]
 
-#load base gestures
-with open("base_gestures.json", "r") as infile:
-    data = json.load(infile)
-
-
-##### GESTURE MATCHING #####
-#preprocessing for gesture matching
-def preprocess_image(img):
-    hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    lower_pink = np.array([140, 100, 100])
-    upper_pink = np.array([170, 255, 255])
-    mask = cv2.inRange(hsv_img, lower_pink, upper_pink)
-    result = cv2.bitwise_and(img, img, mask=mask)
-    return result
-
-#match gestures w/ orb + bf 
-def match_gestures(handedness, img2, threshold=110):
-    print(handedness)
-    img2_processed = preprocess_image(img2)
-    orb = cv2.ORB_create()
-    
-    for val in gestures:
-        des1_list = data[val]
-        des1 = np.array(des1_list)
-        kp2, des2 = orb.detectAndCompute(img2_processed, None)
-
-        if des1 is not None and des2 is not None and len(des1) > 0 and len(des2) > 0:
-            if des1.dtype != np.uint8:
-                des1 = des1.astype(np.uint8)
-            if des2.dtype != np.uint8:
-                des2 = des2.astype(np.uint8)
-
-            bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-            matches = bf.match(des1, des2)
-            matches = sorted(matches, key=lambda x: x.distance)
-
-            if len(matches) > threshold:
-                print("The gestures are similar.")
-                if val == "to_right" and handedness == "Right":
-                    return "to_left"
-                elif val == "to_left" and handedness == "Left":
-                    return "to_right"
-                else:
-                    return val
-        else:
-            print("One or both sets of descriptors are missing or empty.")
-    return ""
-
-##### PROCESS FRAMES! #####
 #process each frame
 def read_frame(frame, hands): 
     print('reading frame')
@@ -142,39 +88,19 @@ def read_frame(frame, hands):
             # Resize image to standard size
             resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
             # base_img  = cv2.imread("base_gestures/start_base.png")
-            start = match_gestures(handedness, resized_image)
             
-            if len(start) != 0:
-                cv2.putText(canvas, start, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.putText(canvas, "Hand: " + handedness, (50, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
             if cv2.waitKey(10) & 0xFF == ord('s'):
-                img_name = f"cropped_hand_{img_counter}.png"
+                img_name = f"cropped_hand_{1}.png"
                 cv2.imwrite("saved_imgs/" + img_name, resized_image)
                 print(f"{img_name} saved.")
-                img_counter += 1   
 
     return canvas, start
 
-#process the gestures & send to controller
-#TODO: take ns, controller_index
-def process_gesture(gesture, nx, controller_idx):
-    if gesture == "speed_inc":
-        send_it2.speed_up(nx, controller_idx)
-    elif gesture == "speed_dec":
-        send_it2.slow_down(nx, controller_idx)
-    elif gesture == "to_right":
-        send_it2.turn_right(nx, controller_idx)
-    elif gesture == "to_left":
-        send_it2.turn_left(nx, controller_idx)
-    elif gesture == "bumper": 
-        print("bumper!")
-
-##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
-def cap_video():
-    cap = cv2.VideoCapture('/dev/video0') 
-    nx, controller_index = send_it2.connect_controller()
+def cap_video_comp():
+    cap = cv2.VideoCapture(1) 
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
             ret, frame = cap.read()
@@ -183,7 +109,6 @@ def cap_video():
                 break  
 
             canvas, gesture = read_frame(frame, hands)
-            process_gesture(gesture, nx, controller_index)
 
             #display
             cv2.imshow('Hand Skeleton', canvas)
@@ -193,36 +118,4 @@ def cap_video():
     cap.release()
     cv2.destroyAllWindows()
 
-########## TESTING! ##########
-#no camera no problem
-def mimic_capture():
-    #set up controller
-    nx, controller_index = send_it2.connect_controller()
-
-    #set up time constants
-    frame_rate = 60
-    delay = 1.0 / frame_rate
-    start_time = time.time()
-
-    #for testing
-    counter = 0
-
-    while True:
-        elapsed_time = time.time() - start_time
-        time_to_wait = delay - elapsed_time
-        
-        #run some test commands!
-        if counter == 0: 
-            send_it2.turn_right(nx, controller_index)
-            time.sleep(0.2)
-            send_it2.turn_left(nx, controller_index)
-            time.sleep(0.2)
-            send_it2.speed_up(nx, controller_index)
-            counter += 1
-
-        if time_to_wait > 0:
-            time.sleep(time_to_wait)
-
-
-#run it!
-cap_video()
+cap_video_comp()
