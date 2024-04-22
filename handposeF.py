@@ -14,7 +14,7 @@ from google.protobuf.json_format import MessageToDict
 import os
 import time
 import send_it2
-import torch
+# import torch
 
 ##### LOADING STUFF #####
 #load some stuff!
@@ -24,9 +24,9 @@ mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
 #use gpu
-print("CUDA available: ", torch.cuda.is_available())
-print("Current device: ", torch.cuda.current_device())
-print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
+# print("CUDA available: ", torch.cuda.is_available())
+# print("Current device: ", torch.cuda.current_device())
+# print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 
 #starting variables
 padding = 30
