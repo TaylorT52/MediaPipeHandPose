@@ -25,7 +25,54 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 desired_aspect_ratio = 1 
 standard_size = (350, 350)
-gestures = ["speed_inc", "speed_dec", "to_right", "to_left"]
+gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper"]
+
+#load base gestures
+with open("base_gestures.json", "r") as infile:
+    data = json.load(infile)
+
+##### GESTURE MATCHING #####
+#preprocessing for gesture matching
+def preprocess_image(img):
+    hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    lower_pink = np.array([140, 100, 100])
+    upper_pink = np.array([170, 255, 255])
+    mask = cv2.inRange(hsv_img, lower_pink, upper_pink)
+    result = cv2.bitwise_and(img, img, mask=mask)
+    return result
+
+#match gestures w/ orb + bf 
+def match_gestures(handedness, img2, threshold=110):
+    print(handedness)
+    img2_processed = preprocess_image(img2)
+    orb = cv2.ORB_create()
+    
+    for val in gestures:
+        des1_list = data[val]
+        des1 = np.array(des1_list)
+        kp2, des2 = orb.detectAndCompute(img2_processed, None)
+
+        if des1 is not None and des2 is not None and len(des1) > 0 and len(des2) > 0:
+            if des1.dtype != np.uint8:
+                des1 = des1.astype(np.uint8)
+            if des2.dtype != np.uint8:
+                des2 = des2.astype(np.uint8)
+
+            bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+            matches = bf.match(des1, des2)
+            matches = sorted(matches, key=lambda x: x.distance)
+
+            if len(matches) > threshold:
+                print("The gestures are similar.")
+                if val == "to_right" and handedness == "Right":
+                    return "to_left"
+                elif val == "to_left" and handedness == "Left":
+                    return "to_right"
+                else:
+                    return val
+        else:
+            print("One or both sets of descriptors are missing or empty.")
+    return ""
 
 #process each frame
 def read_frame(frame, hands): 
@@ -87,7 +134,11 @@ def read_frame(frame, hands):
     
             # Resize image to standard size
             resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
-            # base_img  = cv2.imread("base_gestures/start_base.png")
+            start = match_gestures(handedness, resized_image)
+            
+            if len(start) != 0:
+                cv2.putText(canvas, start, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(canvas, "Hand: " + handedness, (50, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             
             cv2.putText(canvas, "Hand: " + handedness, (50, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
