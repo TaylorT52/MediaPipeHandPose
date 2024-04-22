@@ -14,7 +14,6 @@ from google.protobuf.json_format import MessageToDict
 import os
 import time
 import send_it2
-# import torch
 
 ##### LOADING STUFF #####
 #load some stuff!
@@ -188,6 +187,7 @@ def cap_video():
 
             canvas, gesture = read_frame(frame, hands)
             process_gesture(gesture, nx, controller_index)
+            print("hello")
 
             #display
             cv2.imshow('Hand Skeleton', canvas)
