@@ -151,7 +151,8 @@ def read_frame(frame, hands):
 
 #video capture, display, and process gestures
 def cap_video_comp():
-    cap = cv2.VideoCapture(1) 
+    cap = cv2.VideoCapture(0) 
+    cap.set(cv2.CAP_PROP_FPS, 30)
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         while cap.isOpened():
             ret, frame = cap.read()
