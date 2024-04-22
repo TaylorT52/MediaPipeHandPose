@@ -14,7 +14,7 @@ from google.protobuf.json_format import MessageToDict
 import os
 import time
 import send_it2
-
+import torch
 
 ##### LOADING STUFF #####
 #load some stuff!
@@ -22,6 +22,11 @@ weights_loc = "weights/best.pt"
 yolo_model = YOLO(weights_loc)
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
+
+#use gpu
+print("CUDA available: ", torch.cuda.is_available())
+print("Current device: ", torch.cuda.current_device())
+print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 
 #starting variables
 padding = 30
@@ -35,7 +40,6 @@ gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper"]
 #load base gestures
 with open("base_gestures.json", "r") as infile:
     data = json.load(infile)
-
 
 ##### GESTURE MATCHING #####
 #preprocessing for gesture matching
@@ -157,7 +161,6 @@ def read_frame(frame, hands):
     return canvas, start
 
 #process the gestures & send to controller
-#TODO: take ns, controller_index
 def process_gesture(gesture, nx, controller_idx):
     if gesture == "speed_inc":
         send_it2.speed_up(nx, controller_idx)
