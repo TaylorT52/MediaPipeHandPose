@@ -22,7 +22,7 @@ yolo_model = YOLO(weights_loc)
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
-#use gpu
+#TODO use gpu
 # print("CUDA available: ", torch.cuda.is_available())
 # print("Current device: ", torch.cuda.current_device())
 # print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
@@ -175,7 +175,7 @@ def process_gesture(gesture, nx, controller_idx):
 ##### VIDEO CAPTURE! #####
 #video capture, display, and process gestures
 def cap_video():
-    cap = cv2.VideoCapture('/dev/video1') 
+    cap = cv2.VideoCapture('/dev/video0') 
     cap.set(cv2.CAP_PROP_FPS, 30)
     nx, controller_index = send_it2.connect_controller()
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
