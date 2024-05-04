@@ -308,7 +308,15 @@ def process_frame_mp(frame):
     detection_result = detector.detect(mp_image)
 
     # Process the frame with MediaPipe Pose
-    result = draw_landmarks_on_image(frame_rgb, detection_result)
-    return result
+    if detection_result.multi_hand_landmarks:
+        for handLMs in detection_result.multi_hand_landmarks:
+            mp_drawing.draw_landmarks(
+                frame_rgb, handLMs, mp_hands.HAND_CONNECTIONS,
+                mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
+                mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2, circle_radius=2)
+            )
+        handedness = detection_result.multi_handedness[0].classification[0].label
+    
+    return frame_rgb
 
 cap_video_mp()
