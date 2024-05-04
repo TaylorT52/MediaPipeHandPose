@@ -316,6 +316,7 @@ def cap_video_mp():
         cv2.waitKey(1)
 
         if cv2.waitKey(10) & 0xFF == ord('s'):
+            print("saved")
             img_name = f"cropped_hand_test.png"
             cv2.imwrite("saved_imgs/" + img_name, cropped)
             print(f"{img_name} saved.")   
