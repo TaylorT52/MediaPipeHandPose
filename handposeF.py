@@ -247,7 +247,7 @@ HANDEDNESS_TEXT_COLOR = (88, 205, 54) # vibrant green
 def draw_landmarks_on_image(rgb_image, detection_result):
   hand_landmarks_list = detection_result.hand_landmarks
   handedness_list = detection_result.handedness
-  annotated_image = np.copy(rgb_image)
+  annotated_image = np.zeros_like(rgb_image)
 
   # Loop through the detected hands to visualize.
   for idx in range(len(hand_landmarks_list)):
@@ -306,17 +306,9 @@ def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     detection_result = detector.detect(mp_image)
- 
+
     # Process the frame with MediaPipe Pose
-    if detection_result.hand_landmarks:
-        for handLMs in detection_result.hand_landmarks:
-            mp_drawing.draw_landmarks(
-                frame_rgb, handLMs, mp_hands.HAND_CONNECTIONS,
-                mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
-                mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2, circle_radius=2)
-            )
-        handedness = detection_result.multi_handedness[0].classification[0].label
-    
-    return frame_rgb
+    result = draw_landmarks_on_image(frame_rgb, detection_result)
+    return result
 
 cap_video_mp()
