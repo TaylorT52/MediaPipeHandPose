@@ -247,7 +247,6 @@ FONT_SIZE = 1
 FONT_THICKNESS = 1
 HANDEDNESS_TEXT_COLOR = (88, 205, 54)
 
-
 def draw_landmarks_on_image(rgb_image, detection_result):
     hand_landmarks_list = detection_result.hand_landmarks
     handedness_list = detection_result.handedness
@@ -298,10 +297,10 @@ def cap_video_mp():
 
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
-    #TODO nx, controller_index = send_it2.connect_controller()
+    nx, controller_index = send_it2.connect_controller()
+    print('hello')
 
     while cap.isOpened():
-        print('hello')
         ret, frame = cap.read()
         if not ret:
             print("no ret!")
@@ -346,6 +345,7 @@ def cap_video_mp():
             cv2.imwrite("saved_imgs/" + img_name, resized_image)
             print(f"{img_name} saved.")  
             img_counter += 1 
+    print('done')
 
 def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
