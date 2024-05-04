@@ -297,7 +297,8 @@ def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     detection_result = detector.detect(mp_image)
-    return draw_landmarks_on_image(frame_rgb, detection_result)
+    result = draw_landmarks_on_image(frame_rgb, detection_result)
+    return result
 
 def cap_video_mp():
     img_counter = 0
