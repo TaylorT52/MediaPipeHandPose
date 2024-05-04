@@ -249,6 +249,7 @@ FONT_THICKNESS = 1
 HANDEDNESS_TEXT_COLOR = (88, 205, 54) # vibrant green
 
 def draw_landmarks_on_image(rgb_image, detection_result):
+    rgb_image = cv2.flip(annotated_image, 1)
     hand_landmarks_list = detection_result.hand_landmarks
     handedness_list = detection_result.handedness
     annotated_image = np.zeros_like(rgb_image)
@@ -289,7 +290,9 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             cv2.rectangle(annotated_image, (min_x, min_y), (max_x, max_y), (0, 255, 0), 2)
 
     annotated_image = cv2.flip(annotated_image, 1)
-    return annotated_image.shape[1]-max_x, max_y, annotated_image.shape[1]-min_x, min_y, annotated_image     
+    new_min_x = annotated_image.shape[1] - max_x 
+    new_max_x = annotated_image.shape[1] - min_x 
+    return max_x, max_y, min_x, min_y, annotated_image     
 
 def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
