@@ -58,7 +58,7 @@ def preprocess_image(img):
     return result
 
 #match gestures w/ orb + bf 
-def match_gestures(handedness, img2, threshold=50):
+def match_gestures(handedness, img2, threshold=30):
     print(handedness)
     img2_processed = img2
     orb = cv2.ORB_create()
@@ -243,10 +243,10 @@ options = vision.HandLandmarkerOptions(base_options=base_options,
                                        num_hands=2)
 detector = vision.HandLandmarker.create_from_options(options)           
 
-MARGIN = 10  # pixels
+MARGIN = 10
 FONT_SIZE = 1
 FONT_THICKNESS = 1
-HANDEDNESS_TEXT_COLOR = (88, 205, 54) # vibrant green
+HANDEDNESS_TEXT_COLOR = (88, 205, 54)
 
 def draw_landmarks_on_image(rgb_image, detection_result):
     hand_landmarks_list = detection_result.hand_landmarks
