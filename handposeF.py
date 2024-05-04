@@ -307,8 +307,7 @@ def cap_video_mp():
             break
 
         result = process_frame_mp(frame)
-        yolo_results = yolo_model.predict(frame)
-
+        
         # Display the frame
         cv2.imshow('MediaPipe Pose', result)
 
