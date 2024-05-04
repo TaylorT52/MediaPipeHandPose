@@ -253,6 +253,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     hand_landmarks_list = detection_result.hand_landmarks
     handedness_list = detection_result.handedness
     annotated_image = np.zeros_like(rgb_image)
+    max_x, max_y, min_x, min_y = 0
 
     if len(hand_landmarks_list) > 0:
         # Loop through the detected hands to visualize.
