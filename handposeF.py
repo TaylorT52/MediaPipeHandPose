@@ -42,6 +42,7 @@ mp_drawing = mp.solutions.drawing_utils
 desired_aspect_ratio = 1 
 standard_size = (350, 350)
 gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper"]
+orb = cv2.ORB_create()
 
 #load base gestures
 with open("base_gestures.json", "r") as infile:
@@ -61,7 +62,6 @@ def preprocess_image(img):
 def match_gestures(handedness, img2, threshold=95):
     print(handedness)
     img2_processed = img2
-    orb = cv2.ORB_create()
     
     for val in gestures:
         des1_list = data[val]
