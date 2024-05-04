@@ -1,10 +1,8 @@
 import time
-
 import cv2
 import mediapipe as mp
 
 video_source = "/dev/video0"  # Use a webcam
-# video_source = "test_video.mp4"  # Path to video file
 
 # Initialize MediaPipe Pose and Drawing utilities
 mp_pose = mp.solutions.pose
@@ -12,7 +10,7 @@ mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose()
 
 # Open the video file
-cap = cv2.VideoCapture(video_source)
+cap = cv2.VideoCapture("bbb_sunflower_1080p_30fps_normal.mp4")
 time.sleep(2)
 
 while cap.isOpened():
