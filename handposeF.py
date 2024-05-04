@@ -34,7 +34,6 @@ print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 
 #Starting variables
 padding = 30
-img_counter = 0
 
 #Mediapipe
 mp_hands = mp.solutions.hands
@@ -248,6 +247,7 @@ FONT_SIZE = 1
 FONT_THICKNESS = 1
 HANDEDNESS_TEXT_COLOR = (88, 205, 54)
 
+
 def draw_landmarks_on_image(rgb_image, detection_result):
     hand_landmarks_list = detection_result.hand_landmarks
     handedness_list = detection_result.handedness
@@ -292,6 +292,8 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     return max_x, max_y, min_x, min_y, annotated_image     
 
 def cap_video_mp():
+    img_counter = 0
+    
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
     nx, controller_index = send_it2.connect_controller()
