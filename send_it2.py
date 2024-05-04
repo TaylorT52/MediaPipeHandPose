@@ -26,10 +26,6 @@ MACRO2 = """
 ZL+ZR 0.25s
 """
 
-START_MACRO =  """
-A 10s
-"""
-
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():

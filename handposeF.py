@@ -281,26 +281,27 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             max_x = int(max(x_coordinates) * width) + MARGIN
             max_y = int(max(y_coordinates) * height) + MARGIN
 
-            hand_dir = handedness[0].category_name
+            #hand_dir = handedness[0].category_name
 
             # Draw handedness (left or right hand) on the image.
-            cv2.putText(annotated_image, hand_dir,
-                        (min_x, min_y), cv2.FONT_HERSHEY_DUPLEX,
-                        FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
+            # cv2.putText(annotated_image, hand_dir,
+            #             (min_x, min_y), cv2.FONT_HERSHEY_DUPLEX,
+            #             FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
             
             #cv2.rectangle(annotated_image, (min_x, min_y), (max_x, max_y), (0, 255, 0), 2)
     annotated_image = cv2.flip(annotated_image, 1)
+
     return hand_dir, max_x, max_y, min_x, min_y, annotated_image     
 
 def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     detection_result = detector.detect(mp_image)
-    handedness, max_x, max_y, min_x, min_y, result = draw_landmarks_on_image(frame_rgb, detection_result)
-    return handedness, max_x, max_y, min_x, min_y, result
+    return draw_landmarks_on_image(frame_rgb, detection_result)
 
 def cap_video_mp():
     img_counter = 0
+
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
     nx, controller_index = send_it2.connect_controller()
