@@ -306,10 +306,10 @@ def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     detection_result = detector.detect(mp_image)
-
+ 
     # Process the frame with MediaPipe Pose
-    if detection_result.multi_hand_landmarks:
-        for handLMs in detection_result.multi_hand_landmarks:
+    if detection_result.hand_landmarks:
+        for handLMs in detection_result.hand_landmarks:
             mp_drawing.draw_landmarks(
                 frame_rgb, handLMs, mp_hands.HAND_CONNECTIONS,
                 mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
