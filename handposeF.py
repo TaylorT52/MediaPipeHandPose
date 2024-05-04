@@ -44,7 +44,7 @@ gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper"]
 orb = cv2.ORB_create()
 
 #load base gestures
-with open("base_gestures.json", "r") as infile:
+with open("base_gestures_new.json", "r") as infile:
     data = json.load(infile)
 
 ##### GESTURE MATCHING #####
@@ -293,7 +293,6 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 def cap_video_mp():
     img_counter = 0
-    
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
     nx, controller_index = send_it2.connect_controller()
