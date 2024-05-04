@@ -214,27 +214,27 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
   return annotated_image
 
-def read_frame_test(frame):
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
-    detection_result = detector.detect(mp_image)
-    result = draw_landmarks_on_image(frame_rgb, detection_result)
-    return result
-
 def cap_video_test():
-    cap = cv2.VideoCapture('/dev/video0') 
-    cap.set(cv2.CAP_PROP_FPS, 30)
+    cap = cv2.VideoCapture("/dev/video0")
+
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
-            print("no ret")
-            break  
-
-        canvas = read_frame_test(frame)
-        #display
-        cv2.imshow('Hand Skeleton', canvas)
-        if cv2.waitKey(10) & 0xFF == ord('q'):
             break
+
+        # Convert the frame to RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
+        detection_result = detector.detect(mp_image)
+
+        # Process the frame with MediaPipe Pose
+        result = draw_landmarks_on_image(frame_rgb, detection_result)
+
+        # Display the frame
+        cv2.imshow('MediaPipe Pose', result)
+
+        # Exit if 'q' keypyt
+        cv2.waitKey(1)
 
 #########
 
