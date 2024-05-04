@@ -21,7 +21,7 @@ import cv2
 import torch
 
 ##### LOADING STUFF #####
-#load some stuff!
+#Load some stuff!
 weights_loc = "weights/best.pt"
 yolo_model = YOLO(weights_loc)
 mp_drawing = mp.solutions.drawing_utils
@@ -32,11 +32,11 @@ print("CUDA available: ", torch.cuda.is_available())
 print("Current device: ", torch.cuda.current_device())
 print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 
-#starting variables
+#Starting variables
 padding = 30
 img_counter = 0
 
-#mediapipe
+#Mediapipe
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 desired_aspect_ratio = 1 
@@ -336,9 +336,10 @@ def cap_video_mp():
         cv2.waitKey(1)
         if cv2.waitKey(10) & 0xFF == ord('s'):
             print("saved")
-            img_name = f"cropped_hand_test.png"
+            img_name = f"cropped_hand_{img_counter}.png"
             cv2.imwrite("saved_imgs/" + img_name, resized_image)
-            print(f"{img_name} saved.")   
+            print(f"{img_name} saved.")  
+            img_counter += 1 
 
 def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
