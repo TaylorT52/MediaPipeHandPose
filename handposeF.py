@@ -278,7 +278,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             y_coordinates = [landmark.y for landmark in hand_landmarks]
             min_x = int(min(x_coordinates) * width) - MARGIN
             min_y = int(min(y_coordinates) * height) - MARGIN
-            max_x = int(max(x_coordinates) * width) + MARGIN
+            max_x = int(max(x_coordinates) * width) + 2*MARGIN
             max_y = int(max(y_coordinates) * height) + MARGIN
 
             # Draw handedness (left or right hand) on the image.
