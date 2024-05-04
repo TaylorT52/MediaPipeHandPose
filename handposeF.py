@@ -296,9 +296,8 @@ def cap_video_mp():
     img_counter = 0
 
     ###### capture a video ######
-    cap = cv2.VideoCapture("/dev/video0")
+    cap = cv2.VideoCapture("/dev/video1")
     nx, controller_index = send_it2.connect_controller()
-    print('hello')
 
     while cap.isOpened():
         ret, frame = cap.read()
