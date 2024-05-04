@@ -307,12 +307,17 @@ def cap_video_mp():
             break
 
         max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
-        cropped_image = result[min_y:max_y, min_x:max_x]
+        cropped = result[min_y:max_y, min_x:max_x]
 
         # Display the frame
-        cv2.imshow('MediaPipe Pose', cropped_image)
+        cv2.imshow('MediaPipe Pose', result)
 
         # Exit if 'q' keypyt
         cv2.waitKey(1)
+
+        if cv2.waitKey(10) & 0xFF == ord('s'):
+            img_name = f"cropped_hand_test.png"
+            cv2.imwrite("saved_imgs/" + img_name, cropped)
+            print(f"{img_name} saved.")   
 
 cap_video_mp()
