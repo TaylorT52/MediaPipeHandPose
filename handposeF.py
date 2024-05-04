@@ -238,7 +238,7 @@ def mimic_capture():
 # cap_video()
             
 
-########## TESTING MEDIAPIPE ########## 
+########## TESTING MEDIAPIPE ##########
 MARGIN = 10  # pixels
 FONT_SIZE = 1
 FONT_THICKNESS = 1
@@ -278,32 +278,37 @@ def draw_landmarks_on_image(rgb_image, detection_result):
                 (text_x, text_y), cv2.FONT_HERSHEY_DUPLEX,
                 FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
 
-  return annotated_image
+  return annotated_image 
 
-# STEP 2: Create an HandLandmarker object.
+
 base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
 options = vision.HandLandmarkerOptions(base_options=base_options,
                                        num_hands=2)
-detector = vision.HandLandmarker.create_from_options(options)
+detector = vision.HandLandmarker.create_from_options(options)            
 
-# Open the video file
-cap = cv2.VideoCapture("/dev/video0")
+def cap_video_mp():
+    cap = cv2.VideoCapture("/dev/video0")
 
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-    # Convert the frame to RGB
+        result = process_frame_mp(frame)
+        # Display the frame
+        cv2.imshow('MediaPipe Pose', result)
+
+        # Exit if 'q' keypyt
+        cv2.waitKey(1)
+
+def process_frame_mp(frame):
+     # Convert the frame to RGB
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     detection_result = detector.detect(mp_image)
 
     # Process the frame with MediaPipe Pose
     result = draw_landmarks_on_image(frame_rgb, detection_result)
+    return result
 
-    # Display the frame
-    cv2.imshow('MediaPipe Pose', result)
-
-    # Exit if 'q' keypyt
-    cv2.waitKey(1)
+cap_video_mp()
