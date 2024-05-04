@@ -296,7 +296,7 @@ def cap_video_mp():
     img_counter = 0
 
     ###### capture a video ######
-    cap = cv2.VideoCapture("/dev/video9")
+    cap = cv2.VideoCapture("/dev/video1")
     nx, controller_index = send_it2.connect_controller()
     print(cap.isOpened())
 
@@ -332,13 +332,14 @@ def cap_video_mp():
             ###### match to a gesture ######
             start = match_gestures("Right", resized_image)
             print(start)
-            #TODO process_gesture(start, nx, controller_index)
+            process_gesture(start, nx, controller_index)
 
         ###### display! ######
         cv2.imshow('MediaPipe Pose', result)
 
         ###### saving & exiting ######
         cv2.waitKey(1)
+
         if cv2.waitKey(10) & 0xFF == ord('s'):
             print("saved")
             img_name = f"cropped_hand_{img_counter}.png"
