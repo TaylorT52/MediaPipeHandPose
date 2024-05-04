@@ -263,8 +263,8 @@ def draw_landmarks_on_image(rgb_image, detection_result):
       annotated_image,
       hand_landmarks_proto,
       solutions.hands.HAND_CONNECTIONS,
-      solutions.drawing_styles.get_default_hand_landmarks_style(),
-      solutions.drawing_styles.get_default_hand_connections_style())
+      solutions.drawing_styles.get_default_hand_landmarks_style(color=(255, 192, 203)),
+      solutions.drawing_styles.get_default_hand_connections_style(color=(255, 192, 203)))
 
     # Get the top left corner of the detected hand's bounding box.
     height, width, _ = annotated_image.shape
