@@ -304,7 +304,7 @@ def cap_video_mp():
 
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
-    nx, controller_index = send_it2.connect_controller()
+    #TODO nx, controller_index = send_it2.connect_controller()
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -338,7 +338,7 @@ def cap_video_mp():
             ###### match to a gesture ######
             start = match_gestures("Right", resized_image)
             print(start)
-            process_gesture(start, nx, controller_index)
+            #TODO process_gesture(start, nx, controller_index)
 
         ###### display! ######
         cv2.imshow('MediaPipe Pose', result)
