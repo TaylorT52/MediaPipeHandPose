@@ -235,8 +235,7 @@ def mimic_capture():
             time.sleep(time_to_wait)
 
 #run it!
-# cap_video()
-            
+# cap_video()    
 
 ########## TESTING MEDIAPIPE ##########
 base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
@@ -307,7 +306,7 @@ def cap_video_mp():
             break
 
         max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
-        cropped = result[min_y:max_y, min_x:max_x]
+        cropped = result[min_y:max_y, max_x:min_x]
 
         # Display the frame
         cv2.imshow('MediaPipe Pose', result)
