@@ -282,7 +282,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             max_y = int(max(y_coordinates) * height) + MARGIN
 
             hand_dir = handedness[0].category_name
-            
+
             # Draw handedness (left or right hand) on the image.
             cv2.putText(annotated_image, hand_dir,
                         (min_x, min_y), cv2.FONT_HERSHEY_DUPLEX,
@@ -291,6 +291,13 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             #cv2.rectangle(annotated_image, (min_x, min_y), (max_x, max_y), (0, 255, 0), 2)
     annotated_image = cv2.flip(annotated_image, 1)
     return hand_dir, max_x, max_y, min_x, min_y, annotated_image     
+
+def process_frame_mp(frame):
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
+    detection_result = detector.detect(mp_image)
+    handedness, max_x, max_y, min_x, min_y, result = draw_landmarks_on_image(frame_rgb, detection_result)
+    return handedness, max_x, max_y, min_x, min_y, result
 
 def cap_video_mp():
     img_counter = 0
@@ -342,12 +349,5 @@ def cap_video_mp():
             cv2.imwrite("saved_imgs/" + img_name, resized_image)
             print(f"{img_name} saved.")  
             img_counter += 1 
-
-def process_frame_mp(frame):
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
-    detection_result = detector.detect(mp_image)
-    result = draw_landmarks_on_image(frame_rgb, detection_result)
-    return result
 
 cap_video_mp()
