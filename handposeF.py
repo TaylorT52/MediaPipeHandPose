@@ -282,6 +282,10 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     cv2.putText(annotated_image, f"{handedness[0].category_name}",
                 (text_x, text_y), cv2.FONT_HERSHEY_DUPLEX,
                 FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
+    
+    pink_color = np.array([203, 192, 255], dtype=np.uint8)
+    mask = cv2.bitwise_not(cv2.inRange(annotated_image, (0, 0, 0), (1, 1, 1)))
+    annotated_image[mask] = pink_color
 
     return annotated_image     
 
