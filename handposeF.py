@@ -35,6 +35,14 @@ print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 #starting variables
 padding = 30
 img_counter = 0
+
+## new ##
+base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
+options = vision.HandLandmarkerOptions(base_options=base_options,
+                                       num_hands=2)
+detector = vision.HandLandmarker.create_from_options(options)
+##########
+
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 desired_aspect_ratio = 1 
@@ -99,7 +107,7 @@ def read_frame(frame, hands):
     image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = cv2.flip(image, 1)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
-    results = hands.process(mp_image)
+    results = detector.detect(mp_image)
     canvas_for_yolo = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     h, w, c = frame.shape
 
