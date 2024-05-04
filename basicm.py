@@ -3,10 +3,6 @@ import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 import cv2
-
-
-#@markdown We implemented some functions to visualize the hand landmark detection results. <br/> Run the following cell to activate the functions.
-
 from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
 import numpy as np

@@ -98,7 +98,8 @@ def read_frame(frame, hands):
     #image loading
     image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = cv2.flip(image, 1)
-    results = hands.process(image)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
+    results = hands.process(mp_image)
     canvas_for_yolo = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     h, w, c = frame.shape
 
