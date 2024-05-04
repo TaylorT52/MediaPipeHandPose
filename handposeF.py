@@ -282,7 +282,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     cv2.putText(annotated_image, f"{handedness[0].category_name}",
                 (min_x, min_y), cv2.FONT_HERSHEY_DUPLEX,
                 FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
-    cv2.rectangle(annotated_image, (min_x, max_y), (max_x, max_y), (0, 255, 0), 2)
+    cv2.rectangle(annotated_image, (min_x, min_y), (max_x, max_y), (0, 255, 0), 2)
 
     return annotated_image     
 
