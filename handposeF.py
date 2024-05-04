@@ -295,6 +295,7 @@ def cap_video_mp():
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
     nx, controller_index = send_it2.connect_controller()
+
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -344,6 +345,12 @@ def process_frame_mp(frame):
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     detection_result = detector.detect(mp_image)
     result = draw_landmarks_on_image(frame_rgb, detection_result)
+    gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
+    black_mask = gray < 10
+    non_black_mask = ~black_mask
+    pink_image = np.zeros_like(result)
+    pink_image[:] = [255, 192, 203]
+    result = np.where(non_black_mask[..., None], pink_image, result)
     return result
 
 cap_video_mp()
