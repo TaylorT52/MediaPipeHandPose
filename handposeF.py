@@ -275,14 +275,14 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     height, width, _ = annotated_image.shape
     x_coordinates = [landmark.x for landmark in hand_landmarks]
     y_coordinates = [landmark.y for landmark in hand_landmarks]
-    text_x = int(min(x_coordinates) * width)
-    text_y = int(min(y_coordinates) * height) - MARGIN
+    min_x, max_x = min(x_coordinates), max(x_coordinates)
+    min_y, max_y = min(y_coordinates), max(y_coordinates)
 
     # Draw handedness (left or right hand) on the image.
     cv2.putText(annotated_image, f"{handedness[0].category_name}",
-                (text_x, text_y), cv2.FONT_HERSHEY_DUPLEX,
+                (min_x, min_y), cv2.FONT_HERSHEY_DUPLEX,
                 FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
-    cv2.rectangle(annotated_image, (text_x, text_y), (text_x+width, text_y+height), (0, 255, 0), 2)
+    cv2.rectangle(annotated_image, (min_x, max_y), (min_x, max_y), (0, 255, 0), 2)
 
     return annotated_image     
 
