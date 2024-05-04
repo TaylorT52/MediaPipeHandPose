@@ -293,13 +293,6 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     annotated_image = cv2.flip(annotated_image, 1)
     return max_x, max_y, min_x, min_y, annotated_image     
 
-def process_frame_mp(frame):
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
-    detection_result = detector.detect(mp_image)
-    result = draw_landmarks_on_image(frame_rgb, detection_result)
-    return result
-
 def cap_video_mp():
     img_counter = 0
 
@@ -352,5 +345,12 @@ def cap_video_mp():
             cv2.imwrite("saved_imgs/" + img_name, resized_image)
             print(f"{img_name} saved.")  
             img_counter += 1 
+
+def process_frame_mp(frame):
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
+    detection_result = detector.detect(mp_image)
+    result = draw_landmarks_on_image(frame_rgb, detection_result)
+    return result
 
 cap_video_mp()
