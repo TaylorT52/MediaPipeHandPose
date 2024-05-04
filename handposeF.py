@@ -60,7 +60,7 @@ def preprocess_image(img):
 #match gestures w/ orb + bf 
 def match_gestures(handedness, img2, threshold=110):
     print(handedness)
-    img2_processed = preprocess_image(img2)
+    img2_processed = img2
     orb = cv2.ORB_create()
     
     for val in gestures:
@@ -291,22 +291,18 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     annotated_image = cv2.flip(annotated_image, 1)
     return max_x, max_y, min_x, min_y, annotated_image     
 
-def process_frame_mp(frame):
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
-    detection_result = detector.detect(mp_image)
-    result = draw_landmarks_on_image(frame_rgb, detection_result)
-    return result
-
 def cap_video_mp():
+    ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video0")
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
+        ###### process frame w/ mp ######
         max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
 
+        ###### crop and add padding ######
         if max_x != 0:
             new_min_x = result.shape[1] - max_x
             new_max_x = result.shape[1] - min_x
@@ -316,31 +312,36 @@ def cap_video_mp():
 
             # Calculate padding
             if current_aspect_ratio < desired_aspect_ratio:
-                # Pad sides
                 new_width = int(desired_aspect_ratio * h)
                 pad_width = (new_width - w) // 2
                 padded_image = cv2.copyMakeBorder(cropped, 0, 0, pad_width, pad_width, cv2.BORDER_CONSTANT, value=[0, 0, 0])
             else:
-                # Pad top and bottom
                 new_height = int(w / desired_aspect_ratio)
                 pad_height = (new_height - h) // 2
                 padded_image = cv2.copyMakeBorder(cropped, pad_height, pad_height, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0])
     
-            # Resize image to standard size
             resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
+
+            ###### match to a gesture ######
             start = match_gestures("Right", resized_image)
             print(start)
 
-        # Display the frame
+        ###### display! ######
         cv2.imshow('MediaPipe Pose', result)
 
-        # Exit if 'q' keypyt
+        ###### saving & exiting ######
         cv2.waitKey(1)
-
         if cv2.waitKey(10) & 0xFF == ord('s'):
             print("saved")
             img_name = f"cropped_hand_test.png"
             cv2.imwrite("saved_imgs/" + img_name, resized_image)
             print(f"{img_name} saved.")   
+
+def process_frame_mp(frame):
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
+    detection_result = detector.detect(mp_image)
+    result = draw_landmarks_on_image(frame_rgb, detection_result)
+    return result
 
 cap_video_mp()
