@@ -308,9 +308,28 @@ def cap_video_mp():
             break
 
         max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
-        new_min_x = result.shape[1] - max_x
-        new_max_x = result.shape[1] - min_x
-        cropped = result[min_y:max_y, new_min_x:new_max_x]
+
+        if max_x != 0:
+            new_min_x = result.shape[1] - max_x
+            new_max_x = result.shape[1] - min_x
+            cropped = result[min_y:max_y, new_min_x:new_max_x]
+            h, w = cropped.shape[:2]
+            current_aspect_ratio = w / h
+
+            # Calculate padding
+            if current_aspect_ratio < desired_aspect_ratio:
+                # Pad sides
+                new_width = int(desired_aspect_ratio * h)
+                pad_width = (new_width - w) // 2
+                padded_image = cv2.copyMakeBorder(cropped, 0, 0, pad_width, pad_width, cv2.BORDER_CONSTANT, value=[0, 0, 0])
+            else:
+                # Pad top and bottom
+                new_height = int(w / desired_aspect_ratio)
+                pad_height = (new_height - h) // 2
+                padded_image = cv2.copyMakeBorder(cropped, pad_height, pad_height, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0])
+    
+            # Resize image to standard size
+            resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
 
         # Display the frame
         cv2.imshow('MediaPipe Pose', result)
@@ -321,7 +340,7 @@ def cap_video_mp():
         if cv2.waitKey(10) & 0xFF == ord('s'):
             print("saved")
             img_name = f"cropped_hand_test.png"
-            cv2.imwrite("saved_imgs/" + img_name, cropped)
+            cv2.imwrite("saved_imgs/" + img_name, resized_image)
             print(f"{img_name} saved.")   
 
 cap_video_mp()
