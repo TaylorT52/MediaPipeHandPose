@@ -58,7 +58,7 @@ def preprocess_image(img):
     return result
 
 #match gestures w/ orb + bf 
-def match_gestures(handedness, img2, threshold=95):
+def match_gestures(handedness, img2, threshold=110):
     print(handedness)
     img2_processed = img2
     
