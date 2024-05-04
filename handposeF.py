@@ -289,6 +289,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             #             FONT_SIZE, HANDEDNESS_TEXT_COLOR, FONT_THICKNESS, cv2.LINE_AA)
             
             #cv2.rectangle(annotated_image, (min_x, min_y), (max_x, max_y), (0, 255, 0), 2)
+
     annotated_image = cv2.flip(annotated_image, 1)
     return max_x, max_y, min_x, min_y, annotated_image     
 
@@ -302,7 +303,7 @@ def cap_video_mp():
     img_counter = 0
 
     ###### capture a video ######
-    cap = cv2.VideoCapture("/dev/video0")
+    cap = cv2.VideoCapture("/dev/video1")
     nx, controller_index = send_it2.connect_controller()
 
     while cap.isOpened():
