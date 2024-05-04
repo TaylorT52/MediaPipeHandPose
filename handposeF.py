@@ -60,7 +60,7 @@ def preprocess_image(img):
 #match gestures w/ orb + bf 
 def match_gestures(handedness, img2, threshold=80):
     print(handedness)
-    img2_processed = img2
+    img2_processed = preprocess_image(img2)
     orb = cv2.ORB_create()
     
     for val in gestures:
