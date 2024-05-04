@@ -73,7 +73,7 @@ def turn_left(nx, controller_idx):
 
 def speed_up(nx, controller_idx):
     print("Speed up")
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=10.0)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=1.0)
 
 #TODO fix these
 def slow_down(nx, controller_idx):
