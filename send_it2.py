@@ -26,6 +26,10 @@ MACRO2 = """
 ZL+ZR 0.25s
 """
 
+START_MACRO =  """
+A 10s
+"""
+
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
@@ -73,7 +77,7 @@ def turn_left(nx, controller_idx):
 
 def speed_up(nx, controller_idx):
     print("Speed up")
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=1.0)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
 
 #TODO fix these
 def slow_down(nx, controller_idx):
