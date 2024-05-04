@@ -301,6 +301,7 @@ def cap_video_mp():
     #TODO nx, controller_index = send_it2.connect_controller()
 
     while cap.isOpened():
+        print('hello')
         ret, frame = cap.read()
         if not ret:
             print("no ret!")
