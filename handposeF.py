@@ -303,12 +303,13 @@ def cap_video_mp():
     img_counter = 0
 
     ###### capture a video ######
-    cap = cv2.VideoCapture("/dev/video1")
+    cap = cv2.VideoCapture("/dev/video0")
     nx, controller_index = send_it2.connect_controller()
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
+            print("no ret!")
             break
 
         ###### process frame w/ mp ######
