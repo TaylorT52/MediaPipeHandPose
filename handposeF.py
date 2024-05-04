@@ -40,7 +40,7 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 desired_aspect_ratio = 1 
 standard_size = (350, 350)
-gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper"]
+gestures = ["speed_inc", "speed_dec", "to_right", "to_left", "bumper_right", "bumper_left"]
 orb = cv2.ORB_create()
 
 #load base gestures
