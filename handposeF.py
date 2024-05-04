@@ -332,10 +332,7 @@ def cap_video_mp():
             # Resize image to standard size
             resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
             start = match_gestures("Right", resized_image)
-            
-            if len(start) != 0:
-                cv2.putText(result, start, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(result, "Hand: " + result, (50, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            print(start)
 
         # Display the frame
         cv2.imshow('MediaPipe Pose', result)
