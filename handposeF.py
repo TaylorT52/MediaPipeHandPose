@@ -289,7 +289,8 @@ def draw_landmarks_on_image(rgb_image, detection_result):
             cv2.rectangle(annotated_image, (min_x, min_y), (max_x, max_y), (0, 255, 0), 2)
 
     annotated_image = cv2.flip(annotated_image, 1)
-    return annotated_image     
+
+    return max_x, max_y, min_x, min_y, annotated_image     
 
 def process_frame_mp(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -305,10 +306,13 @@ def cap_video_mp():
         if not ret:
             break
 
-        result = process_frame_mp(frame)
+        max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
+        save_me = result[min_y:max_y, min_x:max_x]
+        h, w = save_me.shape[:2]
+        current_aspect_ratio = w / h
 
         # Display the frame
-        cv2.imshow('MediaPipe Pose', result)
+        cv2.imshow('MediaPipe Pose', save_me)
 
         # Exit if 'q' keypyt
         cv2.waitKey(1)
