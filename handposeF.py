@@ -306,7 +306,9 @@ def cap_video_mp():
             break
 
         max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
-        cropped = result[min_y:max_y, min_x:max_x]
+        new_min_x = result.shape[1] - max_x
+        new_max_x = result.shape[1] - min_x
+        cropped = result[min_y:max_y, new_min_x:new_max_x]
 
         # Display the frame
         cv2.imshow('MediaPipe Pose', result)
