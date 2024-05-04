@@ -308,14 +308,9 @@ def cap_video_mp():
             break
 
         max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
-        save_me = result[min_y:max_y, min_x:max_x]
-        h, w = save_me.shape[:2]
-
-        if max_x != 0:
-            current_aspect_ratio = w / h
 
         # Display the frame
-        cv2.imshow('MediaPipe Pose', save_me)
+        cv2.imshow('MediaPipe Pose', result)
 
         # Exit if 'q' keypyt
         cv2.waitKey(1)
