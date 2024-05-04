@@ -69,7 +69,7 @@ detector = vision.HandLandmarker.create_from_options(options)
 # cv2.imshow("", cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
 
 # Open the video file
-cap = cv2.VideoCapture("bbb_sunflower_1080p_30fps_normal.mp4")
+cap = cv2.VideoCapture("/dev/video0")
 
 while cap.isOpened():
     ret, frame = cap.read()
