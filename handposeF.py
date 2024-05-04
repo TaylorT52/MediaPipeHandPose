@@ -2,18 +2,22 @@
 #author @ taylor tam
 
 ##### IMPORTS #####
-import mediapipe as mp
 import cv2
 import numpy as np
-from ultralytics import YOLO
 import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
+from mediapipe.framework.formats import landmark_pb2
+
+from ultralytics import YOLO
 import os
 from ultralytics.utils.plotting import Annotator 
 import json
 from google.protobuf.json_format import MessageToDict
-import os
 import time
 import send_it2
+import cv2
+
 
 ##### LOADING STUFF #####
 #load some stuff!
@@ -23,9 +27,10 @@ mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
 #TODO use gpu
-# print("CUDA available: ", torch.cuda.is_available())
-# print("Current device: ", torch.cuda.current_device())
-# print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
+import torch
+print("CUDA available: ", torch.cuda.is_available())
+print("Current device: ", torch.cuda.current_device())
+print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 
 #starting variables
 padding = 30
