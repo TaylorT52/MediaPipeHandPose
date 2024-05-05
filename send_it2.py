@@ -81,6 +81,7 @@ def speed_up(nx, controller_idx):
 
 #TODO fix these
 def slow_down(nx, controller_idx):
+    nx.press_buttons(controller_idx, [nxbt.Buttons.B], down=0.2)
     print("Slow down")
 
 def power_up(nx, controller_idx):
