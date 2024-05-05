@@ -145,7 +145,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 def cap_video_mp():
     ###### capture a video ######
-    cap = cv2.VideoCapture("/dev/video1")
+    cap = cv2.VideoCapture("/dev/video2")
     nx, controller_index = send_it2.connect_controller()
     print(f"Capture is working: {cap.isOpened()}")
 
