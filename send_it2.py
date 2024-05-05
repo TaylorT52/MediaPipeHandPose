@@ -65,7 +65,7 @@ def connect_controller():
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
-    nx.tilt_stick(controller_idx, Sticks.RIGHT_STICK, 100, 0, tilted=10)
+    nx.tilt_stick(controller_idx, Sticks.RIGHT_STICK, 100, 0, tilted=0.5)
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
     print("done turning right")
 
