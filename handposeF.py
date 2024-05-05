@@ -248,6 +248,7 @@ FONT_THICKNESS = 1
 HANDEDNESS_TEXT_COLOR = (88, 205, 54)
 
 def draw_landmarks_on_image(rgb_image, detection_result):
+    hand_dir = "Right"
     hand_landmarks_list = detection_result.hand_landmarks
     handedness_list = detection_result.handedness
     annotated_image = np.zeros_like(rgb_image)
