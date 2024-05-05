@@ -150,7 +150,7 @@ def cap_video_mp():
     start_time = time.time()
 
     ###### capture a video ######
-    cap = cv2.VideoCapture("/dev/video2")
+    cap = cv2.VideoCapture("/dev/video3")
     nx, controller_index = send_it2.connect_controller()
     print(f"Capture is working: {cap.isOpened()}")
 
