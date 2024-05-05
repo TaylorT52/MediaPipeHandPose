@@ -26,10 +26,6 @@ MACRO2 = """
 ZL+ZR 0.25s
 """
 
-TURN_RIGHT = """
-A+L_STICK@-100+000 0.2s
-"""
-
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
@@ -68,11 +64,11 @@ def connect_controller():
 
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
-    # print("Turn right")
-    # nx.tilt_stick(controller_idx, Sticks.RIGHT_STICK, 100, 0, tilted=0.5)
-    # nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
-    # print("done turning right")
-    macro_id = nx.macro(controller_idx, TURN_RIGHT, block=True)
+    print("Turn right")
+    nx.tilt_stick(controller_idx, Sticks.RIGHT_STICK, -100, 0, tilted=0.5)
+    print("tilt")
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
+    print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
