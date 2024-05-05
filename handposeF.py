@@ -144,6 +144,10 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     return hand_dir, max_x, max_y, min_x, min_y, annotated_image     
 
 def cap_video_mp():
+    #print FPS
+    prev_frame_time = 0
+    new_frame_time = 0
+
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video2")
     nx, controller_index = send_it2.connect_controller()
@@ -154,6 +158,14 @@ def cap_video_mp():
         if not ret:
             print("no ret!")
             break
+        
+        #Fps shenanigans
+        new_frame_time = time.time()
+        fps = 1/(new_frame_time-prev_frame_time) 
+        prev_frame_time = new_frame_time 
+        fps = int(fps) 
+        fps = str(fps)
+        print(fps)
 
         ###### process frame w/ mp ######
         handedness, max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
