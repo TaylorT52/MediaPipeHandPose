@@ -184,6 +184,7 @@ def cap_video_mp():
                 print(start)
                 process_gesture(start, nx, controller_index)
 
+    cap.release()
     print('Game finished!')
 
 def process_frame_mp(frame):
