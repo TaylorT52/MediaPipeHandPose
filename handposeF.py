@@ -337,7 +337,7 @@ def cap_video_mp():
                 process_gesture(start, nx, controller_index)
 
         ###### display! ######
-        cv2.imshow('MediaPipe Pose', result)
+        #cv2.imshow('MediaPipe Pose', result)
 
         ###### saving & exiting ######
         cv2.waitKey(1)
