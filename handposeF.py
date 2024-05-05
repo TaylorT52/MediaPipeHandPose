@@ -340,14 +340,14 @@ def cap_video_mp():
         #cv2.imshow('MediaPipe Pose', result)
 
         ###### saving & exiting ######
-        cv2.waitKey(1)
+        # cv2.waitKey(1)
 
-        if cv2.waitKey(10) & 0xFF == ord('s'):
-            print("saved")
-            img_name = f"cropped_hand_{img_counter}.png"
-            cv2.imwrite("saved_imgs/" + img_name, resized_image)
-            print(f"{img_name} saved.")  
-            img_counter += 1 
+        # if cv2.waitKey(10) & 0xFF == ord('s'):
+        #     print("saved")
+        #     img_name = f"cropped_hand_{img_counter}.png"
+        #     cv2.imwrite("saved_imgs/" + img_name, resized_image)
+        #     print(f"{img_name} saved.")  
+        #     img_counter += 1 
 
     print('done')
 
