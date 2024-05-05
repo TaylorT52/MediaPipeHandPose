@@ -332,7 +332,7 @@ def cap_video_mp():
                 resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
 
                 ###### match to a gesture ######
-                start = match_gestures("Right", resized_image)
+                start = match_gestures(handedness, resized_image)
                 print(start)
                 process_gesture(start, nx, controller_index)
 
