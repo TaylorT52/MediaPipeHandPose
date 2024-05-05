@@ -145,10 +145,9 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 def cap_video_mp():
     #print FPS
-    prev_frame_time = 0
-    new_frame_time = 0
     frame_count = 0
     total_time = 0
+    start_time = time.time()
 
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video2")
@@ -191,18 +190,15 @@ def cap_video_mp():
                 process_gesture(start, nx, controller_index)
 
                 #Fps shenanigans
-                frame_start_time = time.time()
-                # frame processing steps
-                frame_end_time = time.time()
-
-                total_time += (frame_end_time - frame_start_time)
                 frame_count += 1
+                current_time = time.time()
+                elapsed_time = current_time - start_time
 
-                if frame_count % 30 == 0:  # Calculate average FPS every 30 frames
-                    avg_fps = frame_count / total_time
-                    print(f"Average FPS: {avg_fps}")
-                    total_time = 0
+                if elapsed_time > 1:  # Update every second
+                    fps = frame_count / elapsed_time
+                    print("Average FPS:", fps)
                     frame_count = 0
+                    start_time = time.time()
 
     cap.release()
     print('Game finished!')
