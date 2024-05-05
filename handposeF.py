@@ -147,6 +147,8 @@ def cap_video_mp():
     #print FPS
     prev_frame_time = 0
     new_frame_time = 0
+    frame_count = 0
+    total_time = 0
 
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video2")
