@@ -158,14 +158,6 @@ def cap_video_mp():
         if not ret:
             print("no ret!")
             break
-        
-        #Fps shenanigans
-        new_frame_time = time.time()
-        fps = 1/(new_frame_time-prev_frame_time) 
-        prev_frame_time = new_frame_time 
-        fps = int(fps) 
-        fps = str(fps)
-        print(fps)
 
         ###### process frame w/ mp ######
         handedness, max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
@@ -195,6 +187,20 @@ def cap_video_mp():
                 start = match_gestures(handedness, resized_image)
                 print(start)
                 process_gesture(start, nx, controller_index)
+
+                #Fps shenanigans
+                frame_start_time = time.time()
+                # frame processing steps
+                frame_end_time = time.time()
+
+                total_time += (frame_end_time - frame_start_time)
+                frame_count += 1
+
+                if frame_count % 30 == 0:  # Calculate average FPS every 30 frames
+                    avg_fps = frame_count / total_time
+                    print(f"Average FPS: {avg_fps}")
+                    total_time = 0
+                    frame_count = 0
 
     cap.release()
     print('Game finished!')
