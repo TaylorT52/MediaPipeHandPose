@@ -298,7 +298,7 @@ def cap_video_mp():
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video1")
     nx, controller_index = send_it2.connect_controller()
-    print(cap.isOpened())
+    print(f"Capture is working: {cap.isOpened()}")
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -315,7 +315,10 @@ def cap_video_mp():
             new_max_x = result.shape[1] - min_x
             cropped = result[min_y:max_y, new_min_x:new_max_x]
             h, w = cropped.shape[:2]
-            current_aspect_ratio = w / h
+            if h != 0:
+                current_aspect_ratio = w / h
+            else:
+                current_aspect_ratio = 0
 
             # Calculate padding
             if current_aspect_ratio < desired_aspect_ratio:
