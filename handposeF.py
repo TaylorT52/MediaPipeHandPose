@@ -317,25 +317,23 @@ def cap_video_mp():
             h, w = cropped.shape[:2]
             if h != 0:
                 current_aspect_ratio = w / h
-            else:
-                current_aspect_ratio = 0
+            
+                # Calculate padding
+                if current_aspect_ratio < desired_aspect_ratio:
+                    new_width = int(desired_aspect_ratio * h)
+                    pad_width = (new_width - w) // 2
+                    padded_image = cv2.copyMakeBorder(cropped, 0, 0, pad_width, pad_width, cv2.BORDER_CONSTANT, value=[0, 0, 0])
+                else:
+                    new_height = int(w / desired_aspect_ratio)
+                    pad_height = (new_height - h) // 2
+                    padded_image = cv2.copyMakeBorder(cropped, pad_height, pad_height, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0])
+        
+                resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
 
-            # Calculate padding
-            if current_aspect_ratio < desired_aspect_ratio:
-                new_width = int(desired_aspect_ratio * h)
-                pad_width = (new_width - w) // 2
-                padded_image = cv2.copyMakeBorder(cropped, 0, 0, pad_width, pad_width, cv2.BORDER_CONSTANT, value=[0, 0, 0])
-            else:
-                new_height = int(w / desired_aspect_ratio)
-                pad_height = (new_height - h) // 2
-                padded_image = cv2.copyMakeBorder(cropped, pad_height, pad_height, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0])
-    
-            resized_image = cv2.resize(padded_image, standard_size, interpolation=cv2.INTER_AREA)
-
-            ###### match to a gesture ######
-            start = match_gestures("Right", resized_image)
-            print(start)
-            process_gesture(start, nx, controller_index)
+                ###### match to a gesture ######
+                start = match_gestures("Right", resized_image)
+                print(start)
+                process_gesture(start, nx, controller_index)
 
         ###### display! ######
         cv2.imshow('MediaPipe Pose', result)
