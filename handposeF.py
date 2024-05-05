@@ -144,11 +144,6 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     return hand_dir, max_x, max_y, min_x, min_y, annotated_image     
 
 def cap_video_mp():
-    #print FPS
-    frame_count = 0
-    total_time = 0
-    start_time = time.time()
-
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video3")
     nx, controller_index = send_it2.connect_controller()
@@ -160,6 +155,8 @@ def cap_video_mp():
             print("no ret!")
             break
 
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        print(fps)
         ###### process frame w/ mp ######
         handedness, max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
 
@@ -188,17 +185,6 @@ def cap_video_mp():
                 start = match_gestures(handedness, resized_image)
                 print(start)
                 process_gesture(start, nx, controller_index)
-
-                #Fps shenanigans
-                frame_count += 1
-                current_time = time.time()
-                elapsed_time = current_time - start_time
-
-                if elapsed_time > 1:  # Update every second
-                    fps = frame_count / elapsed_time
-                    print("Average FPS:", fps)
-                    frame_count = 0
-                    start_time = time.time()
 
     cap.release()
     print('Game finished!')
