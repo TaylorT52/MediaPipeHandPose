@@ -100,7 +100,7 @@ def process_gesture(gesture, nx, controller_idx):
         send_it2.turn_right(nx, controller_idx)
     elif gesture == "to_left":
         send_it2.turn_left(nx, controller_idx)
-    elif gesture == "bumper": 
+    elif gesture == "bumper_left" or gesture == "bumper_right": 
         send_it2.power_up(nx, controller_idx)
 
 ##### MEDIAPIPE! #####
