@@ -101,7 +101,7 @@ def process_gesture(gesture, nx, controller_idx):
     elif gesture == "to_left":
         send_it2.turn_left(nx, controller_idx)
     elif gesture == "bumper": 
-        print("bumper!")
+        send_it2.power_up(nx, controller_idx)
 
 ##### MEDIAPIPE! #####
 def draw_landmarks_on_image(rgb_image, detection_result):
@@ -155,8 +155,6 @@ def cap_video_mp():
             print("no ret!")
             break
 
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        print(fps)
         ###### process frame w/ mp ######
         handedness, max_x, max_y, min_x, min_y, result = process_frame_mp(frame)
 
