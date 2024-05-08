@@ -5,6 +5,7 @@ import nxbt
 from nxbt import Buttons
 from nxbt import Sticks
 import time
+import threading
 
 ##### START SEQUENCE #####
 #starts from change grip/order --> Mario Kart
@@ -25,6 +26,9 @@ A 0.1s
 MACRO2 = """
 ZL+ZR 0.25s
 """
+
+## testing A
+hold_a = threading.Event()
 
 ##### CONNECT & START #####
 #connects and runs a start sequence
