@@ -27,6 +27,13 @@ MACRO2 = """
 ZL+ZR 0.25s
 """
 
+## attempting threading v2
+def continuous_press(nx, controller_idx, button):
+    while True:
+        nx.press_buttons(controller_idx, [button], down=0.1)
+        time.sleep(0.05)
+
+
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
@@ -89,7 +96,8 @@ def turn_left(nx, controller_idx):
 def speed_up(nx, controller_idx, first_press):
     print("Speed up")
     if first_press: 
-        print("first press!")
+        print("First press! Starting continuous acceleration.")
+        threading.Thread(target=continuous_press, args=(nx, controller_idx, 'A')).start()
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
 
 def slow_down(nx, controller_idx):
