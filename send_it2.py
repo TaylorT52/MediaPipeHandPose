@@ -63,29 +63,35 @@ def connect_controller():
     print("Ready to play!")
     return nx, controller_index
 
-##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.3)
     print("tilt")
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+    for _ in range(3):  # Simulate a more continuous press
+        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+        time.sleep(0.05)  # Short sleep to mimic the button being held
     print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -75, 0, tilted=0.3)
     print("tilt")
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+    for _ in range(3):  # Simulate a more continuous press
+        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+        time.sleep(0.05)  # Short sleep to mimic the button being held
     print("done turning left")
 
 def speed_up(nx, controller_idx):
     print("Speed up")
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
+    for _ in range(4):  # Increase the frequency/length for more emphasis on speed up
+        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+        time.sleep(0.05)  # Short sleep to mimic the button being held more continuously
 
 def slow_down(nx, controller_idx):
-    nx.press_buttons(controller_idx, [nxbt.Buttons.B], down=0.2)
     print("Slow down")
+    # Assuming slowing down involves releasing A, pressing B instead
+    nx.press_buttons(controller_idx, [nxbt.Buttons.B], down=0.2)
 
 def power_up(nx, controller_idx):
-    nx.press_buttons(controller_idx, ["ZL"], down=0.2)
     print('pow!')
+    nx.press_buttons(controller_idx, ["ZL"], down=0.2)
