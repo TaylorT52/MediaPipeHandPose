@@ -66,24 +66,22 @@ def connect_controller():
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
+    for tilt in range(10, 51, 10): 
+        nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, tilt, 0, tilted=0.1)
+        time.sleep(0.05)  
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 50, 0, tilted=0.1)
+    time.sleep(0.2) 
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)
+
     print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
-
-    # Gradually increase the tilt intensity for a smoother turn
-    for tilt in range(-10, -51, -10):  # Starts at -10, goes to -50, with steps of -10
+    for tilt in range(-10, -51, -10):
         nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, tilt, 0, tilted=0.1)
-        time.sleep(0.05)  # Short sleep to simulate gradual turning
-
-    # Hold the last tilt position for a brief moment to establish the turn
+        time.sleep(0.05)
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -50, 0, tilted=0.1)
-    time.sleep(0.2)  # Hold the turn position for a bit longer
-
-    # Simulate continuous pressing of the A button during the turn
-    # This mimics maintaining speed while turning
+    time.sleep(0.2) 
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)
 
     print("done turning left")
