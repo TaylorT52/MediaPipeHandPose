@@ -66,30 +66,25 @@ def connect_controller():
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
-
-    # Start pressing the A button before beginning the tilt to ensure speed is maintained
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  # Press A briefly to start acceleration
-
-    # Gradually increase the tilt intensity for a smoother turn
-    for tilt in range(10, 51, 10):  # Starts at 10, goes to 50, with steps of 10
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  
+    for tilt in range(10, 51, 10):  
         nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, tilt, 0, tilted=0.1)
-        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)  # Press A with each tilt increment to simulate continuous acceleration
-        time.sleep(0.05)  # Short sleep to simulate gradual turning
-
-    # Keep the A button pressed while holding the last tilt position for a brief moment
+        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02) 
+        time.sleep(0.01)
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 50, 0, tilted=0.1)
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  # Maintain A button press longer for the final tilt
-
-    print("done turning right")
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  
 
 def turn_left(nx, controller_idx):
     print("Turn left")
-    for tilt in range(-10, -51, -10):
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1) 
+    for tilt in range(-10, -51, -10): 
         nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, tilt, 0, tilted=0.1)
-        time.sleep(0.05)
+        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)  
+        time.sleep(0.01) 
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -50, 0, tilted=0.1)
-    time.sleep(0.05) 
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  
+
+    print("done turning left")
 
 def speed_up(nx, controller_idx, first_press):
     print("Speed up")
