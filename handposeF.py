@@ -35,8 +35,7 @@ print("Device name: ", torch.cuda.get_device_name(torch.cuda.current_device()))
 base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
 options = vision.HandLandmarkerOptions(base_options=base_options,
                                        num_hands=2)
-detector = vision.HandLandmarker.create_from_options(options) 
-start_up = True          
+detector = vision.HandLandmarker.create_from_options(options)       
 
 MARGIN = 10
 FONT_SIZE = 1
@@ -92,10 +91,9 @@ def match_gestures(handedness, img2, threshold=110):
 
 
 #process the gestures & send to controller
-def process_gesture(gesture, nx, controller_idx):
+def process_gesture(gesture, nx, controller_idx, start_up):
     if gesture == "speed_inc":
         send_it2.speed_up(nx, controller_idx, start_up)
-        start_up = False
     elif gesture == "speed_dec":
         send_it2.slow_down(nx, controller_idx)
     elif gesture == "to_right":
@@ -146,6 +144,8 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     return hand_dir, max_x, max_y, min_x, min_y, annotated_image     
 
 def cap_video_mp():
+    start_up = True
+
     ###### capture a video ######
     cap = cv2.VideoCapture("/dev/video3")
     nx, controller_index = send_it2.connect_controller()
@@ -184,7 +184,9 @@ def cap_video_mp():
                 ###### match to a gesture ######
                 start = match_gestures(handedness, resized_image)
                 print(start)
-                process_gesture(start, nx, controller_index)
+                process_gesture(start, nx, controller_index, start_up)
+                if start == "speed_inc":
+                    start_up = False
 
     cap.release()
     print('Game finished!')

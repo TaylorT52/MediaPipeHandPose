@@ -92,7 +92,6 @@ def speed_up(nx, controller_idx, first_press):
     print("Speed up")
     if first_press: 
         macro_id = nx.macro(controller_idx, MACRO3, block=False)
-        first_press = False
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
 
 def slow_down(nx, controller_idx):
