@@ -66,17 +66,14 @@ def connect_controller():
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
-    
-    print("tilt")
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 50, 0, tilted=0.1)
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)
     print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
-    print("tilt")
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -50, 0, tilted=0.1)
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)
     print("done turning left")
 
 def speed_up(nx, controller_idx, first_press):
