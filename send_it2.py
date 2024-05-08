@@ -72,8 +72,20 @@ def turn_right(nx, controller_idx):
 
 def turn_left(nx, controller_idx):
     print("Turn left")
+
+    # Gradually increase the tilt intensity for a smoother turn
+    for tilt in range(-10, -51, -10):  # Starts at -10, goes to -50, with steps of -10
+        nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, tilt, 0, tilted=0.1)
+        time.sleep(0.05)  # Short sleep to simulate gradual turning
+
+    # Hold the last tilt position for a brief moment to establish the turn
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -50, 0, tilted=0.1)
+    time.sleep(0.2)  # Hold the turn position for a bit longer
+
+    # Simulate continuous pressing of the A button during the turn
+    # This mimics maintaining speed while turning
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.02)
+
     print("done turning left")
 
 def speed_up(nx, controller_idx, first_press):
