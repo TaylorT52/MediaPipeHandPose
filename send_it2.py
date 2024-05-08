@@ -33,7 +33,6 @@ LOOP 500
     0.05s 
 """
 
-first_press = True
 
 ##### CONNECT & START #####
 #connects and runs a start sequence
@@ -89,7 +88,7 @@ def turn_left(nx, controller_idx):
         nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
     print("done turning left")
 
-def speed_up(nx, controller_idx):
+def speed_up(nx, controller_idx, first_press):
     print("Speed up")
     if first_press: 
         macro_id = nx.macro(controller_idx, MACRO3, block=False)

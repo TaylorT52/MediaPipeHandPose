@@ -94,7 +94,8 @@ def match_gestures(handedness, img2, threshold=110):
 #process the gestures & send to controller
 def process_gesture(gesture, nx, controller_idx):
     if gesture == "speed_inc":
-        send_it2.speed_up(nx, controller_idx)
+        send_it2.speed_up(nx, controller_idx, start_up)
+        start_up = False
     elif gesture == "speed_dec":
         send_it2.slow_down(nx, controller_idx)
     elif gesture == "to_right":
