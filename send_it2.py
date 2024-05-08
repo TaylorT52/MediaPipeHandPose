@@ -27,6 +27,14 @@ MACRO2 = """
 ZL+ZR 0.25s
 """
 
+MACRO3 = """
+LOOP 500
+    A 0.05s
+    0.05s 
+"""
+
+first_press = True
+
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
@@ -83,6 +91,9 @@ def turn_left(nx, controller_idx):
 
 def speed_up(nx, controller_idx):
     print("Speed up")
+    if first_press: 
+        macro_id = nx.macro(controller_idx, MACRO3, block=False)
+        first_press = False
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
 
 def slow_down(nx, controller_idx):
