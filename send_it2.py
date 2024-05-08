@@ -68,14 +68,14 @@ def turn_right(nx, controller_idx):
     print("Turn right")
     
     print("tilt")
-    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.1)
+    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 50, 0, tilted=0.1)
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
     print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
     print("tilt")
-    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -75, 0, tilted=0.1)
+    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -50, 0, tilted=0.1)
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
     print("done turning left")
 
