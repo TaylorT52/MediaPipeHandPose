@@ -68,19 +68,15 @@ def turn_right(nx, controller_idx):
     print("Turn right")
     
     print("tilt")
-    for _ in range(3):
-        nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.1)
-        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
-        time.sleep(0.05)
+    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.1)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
     print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
-    
     print("tilt")
-    for _ in range(3):
-        nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -75, 0, tilted=0.1)
-        nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
+    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -75, 0, tilted=0.1)
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
     print("done turning left")
 
 def speed_up(nx, controller_idx, first_press):
