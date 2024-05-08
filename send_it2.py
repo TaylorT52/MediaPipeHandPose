@@ -30,6 +30,18 @@ ZL+ZR 0.25s
 ## testing A
 hold_a = threading.Event()
 
+def manage_a_button(nx, controller_idx):
+    while True:
+        if hold_a.is_set():
+            nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
+        time.sleep(0.1)
+
+def start():
+    threading.Thread(target=manage_a_button).start()
+
+def hold_a_button(self):
+    hold_a.set()
+
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
