@@ -28,7 +28,9 @@ ZL+ZR 0.25s
 """
 
 MACRO3 = """
-A 50s
+LOOP 500
+    A 0.05s
+    0.05s 
 """
 
 
@@ -71,7 +73,7 @@ def connect_controller():
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
-    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.3)
+    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, "075+000", 0, tilted=0.3)
     print("tilt")
     for _ in range(3):
         nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
@@ -89,7 +91,7 @@ def turn_left(nx, controller_idx):
 def speed_up(nx, controller_idx, first_press):
     print("Speed up")
     if first_press: 
-        macro_id = nx.macro(controller_idx, MACRO3, block=False)
+        print("first press!")
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
 
 def slow_down(nx, controller_idx):
@@ -99,3 +101,6 @@ def slow_down(nx, controller_idx):
 def power_up(nx, controller_idx):
     nx.press_buttons(controller_idx, ["ZL"], down=0.2)
     print('pow!')
+
+def drift(nx, controller_idx):
+    nx.press_buttons(controller_idx, ["ZR"], down=0.2)

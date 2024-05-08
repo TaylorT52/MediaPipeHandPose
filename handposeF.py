@@ -100,8 +100,10 @@ def process_gesture(gesture, nx, controller_idx, start_up):
         send_it2.turn_right(nx, controller_idx)
     elif gesture == "to_left":
         send_it2.turn_left(nx, controller_idx)
-    elif gesture == "bumper_left" or gesture == "bumper_right": 
+    elif gesture == "bumper_left": 
         send_it2.power_up(nx, controller_idx)
+    elif gesture == "bumper_right": 
+        send_it2.drift(nx, controller_idx)
 
 ##### MEDIAPIPE! #####
 def draw_landmarks_on_image(rgb_image, detection_result):
