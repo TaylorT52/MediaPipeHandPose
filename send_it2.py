@@ -27,13 +27,6 @@ MACRO2 = """
 ZL+ZR 0.25s
 """
 
-MACRO3 = """
-LOOP 500
-    A 0.05s
-    0.05s 
-"""
-
-
 ##### CONNECT & START #####
 #connects and runs a start sequence
 def connect_controller():
@@ -73,18 +66,20 @@ def connect_controller():
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
     print("Turn right")
-    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.1)
+    
     print("tilt")
     for _ in range(3):
+        nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, 70, 0, tilted=0.1)
         nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
         time.sleep(0.05)
     print("done turning right")
 
 def turn_left(nx, controller_idx):
     print("Turn left")
-    nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -75, 0, tilted=0.1)
+    
     print("tilt")
     for _ in range(3):
+        nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -75, 0, tilted=0.1)
         nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.05)
     print("done turning left")
 
