@@ -1,7 +1,7 @@
 #controls and connecting to switch controller, send controls
 #author @ taylor tam
-
 import nxbt 
+from pathlib import Path
 from nxbt import Buttons
 from nxbt import Sticks
 import time
@@ -39,7 +39,7 @@ def continuous_press(nx, controller_idx, button):
 def connect_controller():
     first_connect = False
     print("Connecting...")
-    nx = nxbt.Nxbt()
+    nx = nxbt.Nxbt(debug=False)
     try:
         #find old controller
         controller_index = nx.create_controller(
@@ -72,6 +72,17 @@ def connect_controller():
 
 ##### CONTROLS #####
 def turn_right(nx, controller_idx):
+    print("going right")
+    input_packet = nx.create_input_packet()
+    input_packet["A"] = True
+    input_packet["L_STICK"]["X_VALUE"] = 100
+    input_packet["L_STICK"]["Y_VALUE"] = 0
+
+    nx.set_controller_input(controller_idx, input_packet)
+    time.sleep(0.1)
+
+def turn_right_1(nx, controller_idx):
+
     print("Turn right")
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  
     for tilt in range(10, 51, 10):  
@@ -82,7 +93,18 @@ def turn_right(nx, controller_idx):
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  
 
 def turn_left(nx, controller_idx):
-    print("Turn left")
+
+    input_packet = nx.create_input_packet()
+    input_packet["A"] = True
+    input_packet["L_STICK"]["X_VALUE"] = -100
+    input_packet["L_STICK"]["Y_VALUE"] = 0
+
+    nx.set_controller_input(controller_idx, input_packet)
+    time.sleep(0.1)
+
+def turn_left_1(nx, controller_idx):
+    print("turn left")
+    return
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1) 
     for tilt in range(-10, -51, -10): 
         nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, tilt, 0, tilted=0.1)
@@ -91,22 +113,42 @@ def turn_left(nx, controller_idx):
     nx.tilt_stick(controller_idx, Sticks.LEFT_STICK, -50, 0, tilted=0.1)
     nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.1)  
 
-    print("done turning left")
-
 def speed_up(nx, controller_idx, first_press):
-    print("Speed up")
-    if first_press: 
-        print("First press! Starting continuous acceleration.")
-        threading.Thread(target=continuous_press, args=(nx, controller_idx, 'A')).start()
-    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=0.2)
+    input_packet = nx.create_input_packet()
+    input_packet["A"] = True
+
+    nx.set_controller_input(controller_idx, input_packet)
+    time.sleep(0.1)
+
+def speed_up_1(nx, controller_idx, first_press):
+    print("Speed up!!!!")
+    nx.press_buttons(controller_idx, [nxbt.Buttons.A], down=1.0)
 
 def slow_down(nx, controller_idx):
+    input_packet = nx.create_input_packet()
+    input_packet["A"] = False
+
+    nx.set_controller_input(controller_idx, input_packet)
+    time.sleep(0.1)
+
+def slow_down_1(nx, controller_idx):
     nx.press_buttons(controller_idx, [nxbt.Buttons.B], down=0.2)
     print("Slow down")
 
 def power_up(nx, controller_idx):
-    nx.press_buttons(controller_idx, ["ZL"], down=0.2)
-    print('pow!')
+    input_packet = nx.create_input_packet()
+    input_packet["ZL"] = True
+
+    nx.set_controller_input(controller_idx, input_packet)
+    time.sleep(0.1)
+
+    print('power up!')
 
 def drift(nx, controller_idx):
-    nx.press_buttons(controller_idx, ["ZR"], down=0.2)
+    input_packet = nx.create_input_packet()
+    input_packet["ZR"] = True
+
+    nx.set_controller_input(controller_idx, input_packet)
+    time.sleep(0.1)
+
+    print("drift")

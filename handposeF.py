@@ -150,7 +150,7 @@ def cap_video_mp():
 
     ###### capture a video ######
     #TODO video path
-    cap = cv2.VideoCapture("/dev/video7")
+    cap = cv2.VideoCapture("/dev/video0")
     nx, controller_index = send_it2.connect_controller()
     print(f"Capture is working: {cap.isOpened()}")
 
