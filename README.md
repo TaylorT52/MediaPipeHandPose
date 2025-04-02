@@ -58,7 +58,7 @@ Custom-trained YOLOv8 model for hand detection, Google’s MediaPipe for hand ke
 - Camera (USB or CSI)  
 - Nintendo Switch
 
-# directory 
+### directory 
 - handpose.ipynb --> runs YOLO + mediapipe + hand gesutres
 - gesture_sim.ipynb --> to save binary feature vectors of base gestures 
 - handposeF.py --> python script for YOLO + mediapipe + hand gestures
